@@ -1,20 +1,18 @@
 //
-//  ContentView.swift
 //  WeSplit
-//
-//  Created by Maic Lopez Saenz on 7/19/22.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
+        Text("Padded text!")
             .padding()
+            .border(.red)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ContentView_Preview: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
