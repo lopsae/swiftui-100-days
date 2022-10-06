@@ -39,13 +39,25 @@ struct ContentView: View {
                         ForEach(tipOptions, id: \.self) { Text($0, format: .percent) }
                     }.pickerStyle(.segmented)
                     Text("Percentage: \(tip)")
-                } header: {
-                    Text("Tip percentage")
-                }
+                } header: { Text("Tip percentage") }
+                Section {
+                    Text("Grand total: \(grandTotal)")
+                    Text("Per person: \(totalPerPerson)")
+                } header: { Text("Totals") }
             }
             .navigationTitle("WeSplit")
             .navigationBarTitleDisplayMode(.large)
-        }
+        } // NavigationView
+    } // body
+
+
+    var grandTotal: Double {
+        let tipAmount: Double = checkAmount * Double(tip) / 100
+        return checkAmount + tipAmount
+    }
+
+    var totalPerPerson: Double {
+        return grandTotal / Double(peopleCount)
     }
 }
 
