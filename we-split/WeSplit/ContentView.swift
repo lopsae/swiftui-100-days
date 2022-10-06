@@ -6,9 +6,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Padded text!")
-            .padding()
-            .border(.red)
+        NavigationView {
+            Form {
+                Section {
+                    Text("First text")}
+                Section {
+                    Text("Second text")
+                    Text("Third text")}
+            }
+            .navigationTitle("WeSplit")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
