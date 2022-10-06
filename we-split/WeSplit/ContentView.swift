@@ -5,8 +5,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var tapCount = 0
     @State private var name = ""
+    @State private var tapCount = 0
+
+    let options = ["Uno", "Dos", "Tres"]
+    @State private var selectedOption = "Dos"
 
     var body: some View {
         NavigationView {
@@ -18,6 +21,18 @@ struct ContentView: View {
                 Section {
                     Button("Increase tap: \(tapCount)") {
                         tapCount += 1
+                    }
+                }
+                Section {
+                    Picker("Select your option", selection: $selectedOption) {
+                        ForEach(options, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                }
+                Section {
+                    ForEach(0 ..< 7) {
+                        Text("Row No. \($0)")
                     }
                 }
             }
