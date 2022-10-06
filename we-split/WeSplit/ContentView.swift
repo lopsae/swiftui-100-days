@@ -11,6 +11,8 @@ struct ContentView: View {
 
     let tipOptions = [25, 20, 15, 10, 0]
 
+    @FocusState private var amountIsFocused: Bool
+
     init() {
 
     }
@@ -24,8 +26,10 @@ struct ContentView: View {
                         value: $checkAmount,
                         format: .currency(code: Locale.current.currencyCode ?? "USD"))
                     .keyboardType(.decimalPad)
+                    .focused($amountIsFocused)
                     Text("Plain: \(checkAmount)")
                     Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                    Text("Focused: \(amountIsFocused.description)")
                 }
                 Section {
                     Picker("Number of people", selection: $peopleCount) {
@@ -47,6 +51,14 @@ struct ContentView: View {
             }
             .navigationTitle("WeSplit")
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        amountIsFocused = false
+                    }
+                }
+            }
         } // NavigationView
     } // body
 
