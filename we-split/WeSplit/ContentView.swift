@@ -5,14 +5,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var tapCount = 0
+    @State private var name = ""
+
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    Text("First text")}
+                    TextField("Enter your name", text: $name)
+                    Text("Name: \(name)")
+                }
                 Section {
-                    Text("Second text")
-                    Text("Third text")}
+                    Button("Increase tap: \(tapCount)") {
+                        tapCount += 1
+                    }
+                }
             }
             .navigationTitle("WeSplit")
             .navigationBarTitleDisplayMode(.inline)
