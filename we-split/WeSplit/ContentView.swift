@@ -33,6 +33,15 @@ struct ContentView: View {
                     }
                     Text("Count: \(peopleCount)")
                 }
+                Section {
+
+                    Picker("Tip %", selection: $tip) {
+                        ForEach(tipOptions, id: \.self) { Text($0, format: .percent) }
+                    }.pickerStyle(.segmented)
+                    Text("Percentage: \(tip)")
+                } header: {
+                    Text("Tip percentage")
+                }
             }
             .navigationTitle("WeSplit")
             .navigationBarTitleDisplayMode(.large)
