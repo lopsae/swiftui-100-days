@@ -21,32 +21,29 @@ struct ContentView: View {
         NavigationView {
             Form {
                 Section {
-                    TextField(
-                        "Check Amount",
-                        value: $checkAmount,
-                        format: .currency(code: Locale.current.currencyCode ?? "USD"))
-                    .keyboardType(.decimalPad)
-                    .focused($amountIsFocused)
-                    Text("Plain: \(checkAmount)")
-                    Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                    TextField("Check Amount", value: $checkAmount, format: currencyFormat)
+                        .keyboardType(.decimalPad)
+                        .focused($amountIsFocused)
+                    Text("Raw: \(checkAmount)")
+                    Text("Formatted: \(checkAmount.formatted(currencyFormat))")
                     Text("Focused: \(amountIsFocused.description)")
                 }
                 Section {
                     Picker("Number of people", selection: $peopleCount) {
                         ForEach(2..<10, id: \.self) { Text("\($0) people") }
                     }
-                    Text("Count: \(peopleCount)")
+                    Text("Raw: \(peopleCount)")
                 }
                 Section {
-
                     Picker("Tip %", selection: $tip) {
                         ForEach(tipOptions, id: \.self) { Text($0, format: .percent) }
                     }.pickerStyle(.segmented)
-                    Text("Percentage: \(tip)")
+                    Text("Raw: \(tip)")
                 } header: { Text("Tip percentage") }
                 Section {
-                    Text("Grand total: \(grandTotal)")
-                    Text("Per person: \(totalPerPerson)")
+                    Text("Total tip: \(tipAmount.formatted(currencyFormat))")
+                    Text("Grand total: \(grandTotal.formatted(currencyFormat))")
+                    Text("Per person: \(totalPerPerson.formatted(currencyFormat))")
                 } header: { Text("Totals") }
             }
             .navigationTitle("WeSplit")
@@ -62,16 +59,23 @@ struct ContentView: View {
         } // NavigationView
     } // body
 
+    var tipAmount: Double {
+        return checkAmount * Double(tip) / 100
+    }
 
     var grandTotal: Double {
-        let tipAmount: Double = checkAmount * Double(tip) / 100
         return checkAmount + tipAmount
     }
 
     var totalPerPerson: Double {
         return grandTotal / Double(peopleCount)
     }
+
+    var currencyFormat: FloatingPointFormatStyle<Double>.Currency {
+        return .currency(code: Locale.current.currencyCode ?? "USD")
+    }
 }
+
 
 struct ContentView_Preview: PreviewProvider {
     static var previews: some View {
