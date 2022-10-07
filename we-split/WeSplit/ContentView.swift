@@ -4,6 +4,7 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     @State private var checkAmount = 0.0
     @State private var peopleCount = 2
@@ -13,9 +14,7 @@ struct ContentView: View {
 
     @FocusState private var amountIsFocused: Bool
 
-    init() {
-
-    }
+    init() {}
 
     var body: some View {
         NavigationView {
@@ -24,6 +23,11 @@ struct ContentView: View {
                     TextField("Check Amount", value: $checkAmount, format: currencyFormat)
                         .keyboardType(.decimalPad)
                         .focused($amountIsFocused)
+                        .onReceive(UITextField.textDidBeginEditingNotification.publisher()) {
+                            notification in
+                            guard let textField = notification.object as? UITextField else { return }
+                            textField.selectedTextRange = textField.fullRange
+                        }
                     Text("Raw: \(checkAmount)")
                     Text("Formatted: \(checkAmount.formatted(currencyFormat))")
                     Text("Focused: \(amountIsFocused.description)")
