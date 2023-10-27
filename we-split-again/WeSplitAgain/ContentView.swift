@@ -1,8 +1,5 @@
 //
-//  ContentView.swift
-//  WeSplitAgain
-//
-//  Created by Maic Lopez Saenz on 10/27/23.
+// WeSplitAgain
 //
 
 import SwiftUI
