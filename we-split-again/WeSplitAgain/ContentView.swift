@@ -38,12 +38,21 @@ struct ContentView: View {
                 }
                 Section {
                     Text(checkAmount, format: .localCurrencyOrUsd())
+                    Text(totalPerPerson, format: .localCurrencyOrUsd())
                 }
             }
             .navigationTitle("WeSplit-Again")
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
 
+    var totalPerPerson: Double {
+        let peopleCount = Double(peopleCount + 2)
+        let tipSelection = Double(tipPercentage)
+        let tipAmount = checkAmount / 100 * tipSelection
+        let grandTotal = checkAmount + tipAmount
+        let amountPerPerson = grandTotal / peopleCount
+        return amountPerPerson
     }
 }
 
