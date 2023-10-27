@@ -9,44 +9,54 @@ import SwiftUI
 
 struct ContentView: View {
 
+    @State private var checkAmount = 0.0
+    @State private var peopleCount = 2
+    @State private var tipPercentage = 20
+
     let tipOptions = [0, 10, 15, 20, 25]
-
-    @State private var tapCount = 0
-    @State private var name = ""
-
-    static let students = ["Andy", "Betty", "Calisto"]
-    @State private var selectedStudent = students[1]
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("Enter your name", text: $name)
-                    Text("Entered name: \(name)")
-                }
-                Section {
-                    Picker("Select your student", selection: $selectedStudent) {
-                        ForEach(Self.students, id: \.self) {
-                            Text("Sophmore: \($0)")
+                    TextField("Amount",
+                              value: $checkAmount,
+                              format: .localCurrencyOrUsd())
+                    .keyboardType(.decimalPad)
+                    Picker("Number of people", selection: $peopleCount) {
+                        ForEach(2..<10) {
+                            Text("\($0) people")
                         }
-                    }
+                    }.pickerStyle(.navigationLink)
+                }
+                Section("Tip percentage") {
+                    Picker("Tip percentage", selection: $tipPercentage) {
+                        ForEach(tipOptions, id: \.self) {
+                            Text($0, format: .percent)
+                        }
+                    }.pickerStyle(.segmented)
                 }
                 Section {
-                    ForEach(0..<3) { item in
-                        Text("Row \(item)")
-                    }
-                }
-                // Outside section
-                Button("Tap Count: \(tapCount)") {
-                    tapCount += 1
+                    Text(checkAmount, format: .localCurrencyOrUsd())
                 }
             }
-            .navigationTitle("Title")
+            .navigationTitle("WeSplit-Again")
             .navigationBarTitleDisplayMode(.inline)
         }
 
     }
 }
+
+
+extension FormatStyle {
+    static func localCurrencyOrUsd<Value>() -> Self
+    where Self == FloatingPointFormatStyle<Value>.Currency, Value: BinaryFloatingPoint
+    {
+        let code = Locale.current.currency?.identifier ?? "USD"
+        return .currency(code: code)
+    }
+}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
