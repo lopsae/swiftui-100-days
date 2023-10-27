@@ -26,6 +26,12 @@ struct ContentView: View {
                               format: .localCurrencyOrUsd())
                     .keyboardType(.decimalPad)
                     .focused($amountIsFocused)
+                    .onReceive(UITextField.textDidBeginEditingNotification.publisher()) {
+                        notification in
+                        guard let textField = notification.object as? UITextField else { return }
+                        textField.selectedTextRange = textField.fullRange
+                    }
+
                     Picker("Number of people", selection: $peopleCount) {
                         ForEach(2..<10, id: \.self) {
                             Text("\($0) people")
@@ -44,6 +50,8 @@ struct ContentView: View {
                     Text("Tip amount: \(tipAmount.asCurrency())")
                     Text("Grand Total: \(grandTotal.asCurrency())")
                     Text("Split between: \(peopleCount)")
+                }
+                Section("Amount per person") {
                     Text("Per person: \(totalPerPerson.asCurrency())")
                 }
             }

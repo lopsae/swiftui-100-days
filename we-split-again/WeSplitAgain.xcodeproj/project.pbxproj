@@ -11,6 +11,7 @@
 		2DDC3DD92AEC47F400C667AF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDC3DD82AEC47F400C667AF /* ContentView.swift */; };
 		2DDC3DDB2AEC47F500C667AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DDC3DDA2AEC47F500C667AF /* Assets.xcassets */; };
 		2DDC3DDF2AEC47F500C667AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DDC3DDE2AEC47F500C667AF /* Preview Assets.xcassets */; };
+		2DDC3DE62AEC712B00C667AF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDC3DE52AEC712B00C667AF /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		2DDC3DDA2AEC47F500C667AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DDC3DDC2AEC47F500C667AF /* WeSplitAgain.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WeSplitAgain.entitlements; sourceTree = "<group>"; };
 		2DDC3DDE2AEC47F500C667AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2DDC3DE52AEC712B00C667AF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				2DDC3DD62AEC47F400C667AF /* WeSplitAgainApp.swift */,
 				2DDC3DD82AEC47F400C667AF /* ContentView.swift */,
+				2DDC3DE52AEC712B00C667AF /* Extensions.swift */,
 				2DDC3DDA2AEC47F500C667AF /* Assets.xcassets */,
 				2DDC3DDC2AEC47F500C667AF /* WeSplitAgain.entitlements */,
 				2DDC3DDD2AEC47F500C667AF /* Preview Content */,
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DDC3DD92AEC47F400C667AF /* ContentView.swift in Sources */,
+				2DDC3DE62AEC712B00C667AF /* Extensions.swift in Sources */,
 				2DDC3DD72AEC47F400C667AF /* WeSplitAgainApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
