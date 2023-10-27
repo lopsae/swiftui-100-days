@@ -9,8 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
 
+    let tipOptions = [0, 10, 15, 20, 25]
+
     @State private var tapCount = 0
     @State private var name = ""
+
+    static let students = ["Andy", "Betty", "Calisto"]
+    @State private var selectedStudent = students[1]
 
     var body: some View {
         NavigationStack {
@@ -20,9 +25,18 @@ struct ContentView: View {
                     Text("Entered name: \(name)")
                 }
                 Section {
-                    Text("Second text")
-                    Text("Third text")
+                    Picker("Select your student", selection: $selectedStudent) {
+                        ForEach(Self.students, id: \.self) {
+                            Text("Sophmore: \($0)")
+                        }
+                    }
                 }
+                Section {
+                    ForEach(0..<3) { item in
+                        Text("Row \(item)")
+                    }
+                }
+                // Outside section
                 Button("Tap Count: \(tapCount)") {
                     tapCount += 1
                 }
