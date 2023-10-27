@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
 
+    @FocusState private var amountIsFocused: Bool
+
     @State private var checkAmount = 0.0
     @State private var peopleCount = 2
     @State private var tipPercentage = 20
@@ -23,6 +25,7 @@ struct ContentView: View {
                               value: $checkAmount,
                               format: .localCurrencyOrUsd())
                     .keyboardType(.decimalPad)
+                    .focused($amountIsFocused)
                     Picker("Number of people", selection: $peopleCount) {
                         ForEach(2..<10) {
                             Text("\($0) people")
@@ -43,6 +46,11 @@ struct ContentView: View {
             }
             .navigationTitle("WeSplit-Again")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                if amountIsFocused {
+                    Button("Done") { amountIsFocused = false }
+                }
+            }
         }
     }
 
