@@ -11,8 +11,8 @@ struct ContentView: View {
 
     @FocusState private var amountIsFocused: Bool
 
-    @State private var checkAmount = 0.0
-    @State private var peopleCount = 2
+    @State private var checkAmount = 20.0
+    @State private var peopleCount = 4
     @State private var tipPercentage = 20
 
     let tipOptions = [0, 10, 15, 20, 25]
@@ -27,7 +27,7 @@ struct ContentView: View {
                     .keyboardType(.decimalPad)
                     .focused($amountIsFocused)
                     Picker("Number of people", selection: $peopleCount) {
-                        ForEach(2..<10) {
+                        ForEach(2..<10, id: \.self) {
                             Text("\($0) people")
                         }
                     }.pickerStyle(.navigationLink)
@@ -39,9 +39,12 @@ struct ContentView: View {
                         }
                     }.pickerStyle(.segmented)
                 }
-                Section {
-                    Text(checkAmount, format: .localCurrencyOrUsd())
-                    Text(totalPerPerson, format: .localCurrencyOrUsd())
+                Section("Values") {
+                    Text("Check amount: \(checkAmount.asCurrency())")
+                    Text("Tip amount: \(tipAmount.asCurrency())")
+                    Text("Grand Total: \(grandTotal.asCurrency())")
+                    Text("Split between: \(peopleCount)")
+                    Text("Per person: \(totalPerPerson.asCurrency())")
                 }
             }
             .navigationTitle("WeSplit-Again")
@@ -54,11 +57,17 @@ struct ContentView: View {
         }
     }
 
-    var totalPerPerson: Double {
-        let peopleCount = Double(peopleCount + 2)
+    var tipAmount: Double {
         let tipSelection = Double(tipPercentage)
-        let tipAmount = checkAmount / 100 * tipSelection
-        let grandTotal = checkAmount + tipAmount
+        return checkAmount / 100 * tipSelection
+    }
+
+    var grandTotal: Double {
+        return checkAmount + tipAmount
+    }
+
+    var totalPerPerson: Double {
+        let peopleCount = Double(peopleCount)
         let amountPerPerson = grandTotal / peopleCount
         return amountPerPerson
     }
@@ -71,6 +80,13 @@ extension FormatStyle {
     {
         let code = Locale.current.currency?.identifier ?? "USD"
         return .currency(code: code)
+    }
+}
+
+
+extension BinaryFloatingPoint {
+    func asCurrency() -> FloatingPointFormatStyle<Self>.Currency.FormatOutput {
+        self.formatted(.localCurrencyOrUsd())
     }
 }
 
