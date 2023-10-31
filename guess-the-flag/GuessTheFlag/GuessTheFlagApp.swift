@@ -1,8 +1,5 @@
 //
-//  GuessTheFlagApp.swift
-//  GuessTheFlag
-//
-//  Created by Maic Lopez Saenz on 10/31/23.
+// GuessTheFlag
 //
 
 import SwiftUI
