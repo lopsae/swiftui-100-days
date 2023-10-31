@@ -25,15 +25,17 @@ struct ContentView: View {
             ConversionUnit(id: "miles", unit: UnitLength.miles)])
     ]
 
-    struct MeasurementSet: Hashable {
+    struct MeasurementSet<UnitType>: Hashable
+    where UnitType: Unit, UnitType: Dimension {
         let id: String
-        let units: [ConversionUnit]
+        let units: [ConversionUnit<UnitType>]
         func hash(into hasher: inout Hasher) { hasher.combine(id) }
     }
 
-    struct ConversionUnit: Hashable {
+    struct ConversionUnit<UnitType>: Hashable
+    where UnitType: Unit, UnitType: Dimension {
         let id: String
-        let unit: Unit
+        let unit: UnitType
         func hash(into hasher: inout Hasher) { hasher.combine(id) }
     }
 
@@ -50,6 +52,10 @@ struct ContentView: View {
                             Text($0.id)
                         }
                     }.pickerStyle(.navigationLink)
+                    .onChange(of: selectedMeasurement) {
+                        selectedInputUnit = nil
+                        selectedOutputUnit = nil
+                    }
                 }
                 Section("Input") {
                     TextField("Input value", value: $inputValue, format: .number, prompt: Text("Input value"))
@@ -84,21 +90,9 @@ struct ContentView: View {
               let selectedOutputUnit = selectedOutputUnit?.unit
         else { return nil }
 
-        if selectedMeasurement.id == "temperature" {
-            let inputUnit = selectedInputUnit as! UnitTemperature
-            let outputUnit = selectedOutputUnit as! UnitTemperature
-            let input = Measurement(value: inputValue, unit: inputUnit)
-            let converted = input.converted(to: outputUnit)
-            return converted.value
-        } else if selectedMeasurement.id == "length" {
-            let inputUnit = selectedInputUnit as! UnitLength
-            let outputUnit = selectedOutputUnit as! UnitLength
-            let input = Measurement(value: inputValue, unit: inputUnit)
-            let converted = input.converted(to: outputUnit)
-            return converted.value
-        }
-
-        return nil
+        let input = Measurement(value: inputValue, unit: selectedInputUnit)
+        let converted = input.converted(to: selectedOutputUnit)
+        return converted.value
     }
 
 }
