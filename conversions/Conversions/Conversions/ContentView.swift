@@ -8,29 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let measurementOptions = ["temperature", "length"]
-    @State private var selectedMeasurement = "temperature"
-
-    private let units: [String: [ConversionUnit]] = [
-        "temperature": [
+    
+    @State private var selectedMeasurement: MeasurementSet = measurementOptions[0]
+    private static let measurementOptions: [MeasurementSet] = [
+        MeasurementSet(id: "temperature",
+            units: [
             ConversionUnit(id: "celcius", unit: UnitTemperature.celsius),
             ConversionUnit(id: "fahrenheit", unit: UnitTemperature.fahrenheit),
-            ConversionUnit(id: "kelvin", unit: UnitTemperature.kelvin)],
-        "length": [
+            ConversionUnit(id: "kelvin", unit: UnitTemperature.kelvin)]),
+        MeasurementSet(id: "length",
+            units: [
             ConversionUnit(id: "meters", unit: UnitLength.meters),
             ConversionUnit(id: "kilometers", unit: UnitLength.kilometers),
             ConversionUnit(id: "feet", unit: UnitLength.feet),
             ConversionUnit(id: "yards", unit: UnitLength.yards),
-            ConversionUnit(id: "miles", unit: UnitLength.miles),]
+            ConversionUnit(id: "miles", unit: UnitLength.miles)])
     ]
+
+    struct MeasurementSet: Hashable {
+        let id: String
+        let units: [ConversionUnit]
+        func hash(into hasher: inout Hasher) { hasher.combine(id) }
+    }
 
     struct ConversionUnit: Hashable {
         let id: String
         let unit: Unit
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
+        func hash(into hasher: inout Hasher) { hasher.combine(id) }
     }
 
     @State private var inputValue: Double? = nil
@@ -42,8 +46,8 @@ struct ContentView: View {
             Form {
                 Section {
                     Picker("Measurement", selection: $selectedMeasurement) {
-                        ForEach(measurementOptions, id: \.self) {
-                            Text($0)
+                        ForEach(Self.measurementOptions, id: \.self) {
+                            Text($0.id)
                         }
                     }.pickerStyle(.navigationLink)
                 }
@@ -52,7 +56,7 @@ struct ContentView: View {
                         .keyboardType(.decimalPad)
                     Text("Raw: \(inputValue?.description ?? "nil")")
                     Picker("Input Unit", selection: $selectedInputUnit) {
-                        ForEach(units[selectedMeasurement]!, id: \.self) {
+                        ForEach(selectedMeasurement.units, id: \.self) {
                             Text($0.id).tag(Optional($0))
                         }
                     }.pickerStyle(.segmented)
@@ -61,7 +65,7 @@ struct ContentView: View {
                 Section("Output") {
                     Text("Converted to: \(convertedValue?.description ?? "nil")")
                     Picker("Output Unit", selection: $selectedOutputUnit) {
-                        ForEach(units[selectedMeasurement]!, id: \.self) {
+                        ForEach(selectedMeasurement.units, id: \.self) {
                             Text($0.id).tag(Optional($0))
                         }
                     }.pickerStyle(.segmented)
@@ -80,13 +84,13 @@ struct ContentView: View {
               let selectedOutputUnit = selectedOutputUnit?.unit
         else { return nil }
 
-        if selectedMeasurement == "temperature" {
+        if selectedMeasurement.id == "temperature" {
             let inputUnit = selectedInputUnit as! UnitTemperature
             let outputUnit = selectedOutputUnit as! UnitTemperature
             let input = Measurement(value: inputValue, unit: inputUnit)
             let converted = input.converted(to: outputUnit)
             return converted.value
-        } else if selectedMeasurement == "length" {
+        } else if selectedMeasurement.id == "length" {
             let inputUnit = selectedInputUnit as! UnitLength
             let outputUnit = selectedOutputUnit as! UnitLength
             let input = Measurement(value: inputValue, unit: inputUnit)
