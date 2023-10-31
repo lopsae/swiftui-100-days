@@ -1,62 +1,39 @@
 //
-//  ContentView.swift
-//  GuessTheFlag
-//
-//  Created by Maic Lopez Saenz on 10/31/23.
+// GuessTheFlag
 //
 
 import SwiftUI
 
 struct ContentView: View {
 
-    @State private var showingAlert = false
+    private var countries = [
+        "Estonia", "France", "Germany", "Ireland",
+        "Italy", "Nigeria", "Poland", "Spain",
+        "UK", "Ukraine", "US"]
+    private var correctAnswer = Int.random(in: 0...2)
+
 
     var body: some View {
         ZStack {
-//            VStack(spacing: 0) {
-//                Color.red
-//                Color.blue
-//            }
-//            LinearGradient(
-//                stops: [
-//                    .init(color: .white, location: 0.4),
-//                    .init(color: .red, location: 0.5)],
-//                startPoint: .top, endPoint: .trailing)
-//            RadialGradient(
-//                colors: [.white, .red],
-//                center: .top, startRadius: 20, endRadius: 200)
-            AngularGradient(colors: [.white, .red, .white], center: .center)
-
-            VStack {
-                Text("With some color")
-                    .padding(50)
-//                    .foregroundStyle(.secondary)
-//                    .background(.ultraThinMaterial)
-                    .foregroundStyle(.white)
-                    .background(.red.gradient)
-                Button {
-                    showingAlert = true
-                } label: {
-                    Label("Show Alert", systemImage: "pencil")
-//                    Image(systemName: "pencil")
-//                    Text("Tap me!")
+            Color.blue.ignoresSafeArea()
+            VStack(spacing: 30) {
+                VStack {
+                    Text("Tap the flag of")
+                        .foregroundStyle(.white)
+                    Text(countries[correctAnswer])
+                        .foregroundStyle(.white)
                 }
-                .alert("Important Message", isPresented: $showingAlert) {
-                    Button("OK") {}
-                    Button("One") {}
-                    Button("Two") {}
-                    Button("CNCL", role: .cancel) {}
-                    Button("Many", role: .destructive) {}
-                } message: {
-                    Text("This is the alert message.")
+                ForEach(0..<3) { index in
+                    Button {
+                        // flag was tapped
+                    } label: {
+                        Image(countries[index])
+                    }
                 }
-//                .buttonStyle(.borderedProminent)
-//                    .tint(.mint)
             }
+        } // ZStack
 
-        }.ignoresSafeArea()
-
-    }
+    } // body
 }
 
 #Preview {
