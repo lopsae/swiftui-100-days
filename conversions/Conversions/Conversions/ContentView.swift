@@ -16,9 +16,9 @@ struct ContentView: View {
         "length": ["meters", "kilometers", "feet", "yards", "miles"]
     ]
 
-    @State private var originalAmount = 0.0
-    @State private var selectedOriginalUnit = "celcius"
-    @State private var selectedConvertedUnit = "celcius"
+    @State private var inputValue: Double? = nil
+    @State private var selectedInputUnit: String? = "celcius"
+    @State private var selectedOutputUnit: String? = nil
 
     var body: some View {
         NavigationStack {
@@ -30,23 +30,25 @@ struct ContentView: View {
                         }
                     }.pickerStyle(.navigationLink)
                 }
-                Section("Original") {
-                    TextField("Unit to convert", value: $originalAmount, format: .number)
+                Section("Input") {
+                    TextField("Input value", value: $inputValue, format: .number, prompt: Text("Prompt?"))
                         .keyboardType(.decimalPad)
-                    Text("Formatted value: \(originalAmount)")
-                    Picker("Original Unit", selection: $selectedOriginalUnit) {
+                    Text("Raw: \(inputValue?.description ?? "nil")")
+                    Picker("Input Unit", selection: $selectedInputUnit) {
                         ForEach(units[selectedMeasurement]!, id: \.self) {
-                            Text($0)
+                            Text($0).tag(Optional($0))
                         }
                     }.pickerStyle(.segmented)
+                    Text("Raw: \(selectedInputUnit ?? "nil")")
                 }
-                Section("Converted") {
+                Section("Output") {
                     Text("Converted to: TODO")
-                    Picker("Converted Unit", selection: $selectedConvertedUnit) {
+                    Picker("Output Unit", selection: $selectedOutputUnit) {
                         ForEach(units[selectedMeasurement]!, id: \.self) {
-                            Text($0)
+                            Text($0).tag(Optional($0))
                         }
                     }.pickerStyle(.segmented)
+                    Text("Raw: \(selectedOutputUnit ?? "nil")")
                 }
             } // Form
             .navigationTitle("Conversions")
