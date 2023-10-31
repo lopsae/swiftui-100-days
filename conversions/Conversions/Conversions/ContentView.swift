@@ -11,14 +11,31 @@ struct ContentView: View {
     private let measurementOptions = ["temperature", "length"]
     @State private var selectedMeasurement = "temperature"
 
-    private let units = [
-        "temperature": ["celcius", "fahrenheit", "kelvin"],
-        "length": ["meters", "kilometers", "feet", "yards", "miles"]
+    private let units: [String: [ConversionUnit]] = [
+        "temperature": [
+            ConversionUnit(id: "celcius", unit: UnitTemperature.celsius),
+            ConversionUnit(id: "fahrenheit", unit: UnitTemperature.fahrenheit),
+            ConversionUnit(id: "kelvin", unit: UnitTemperature.kelvin)],
+        "length": [
+            ConversionUnit(id: "meters", unit: UnitLength.meters),
+            ConversionUnit(id: "kilometers", unit: UnitLength.kilometers),
+            ConversionUnit(id: "feet", unit: UnitLength.feet),
+            ConversionUnit(id: "yards", unit: UnitLength.yards),
+            ConversionUnit(id: "miles", unit: UnitLength.miles),]
     ]
 
+    struct ConversionUnit: Hashable {
+        let id: String
+        let unit: Unit
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+    }
+
     @State private var inputValue: Double? = nil
-    @State private var selectedInputUnit: String? = "celcius"
-    @State private var selectedOutputUnit: String? = nil
+    @State private var selectedInputUnit: ConversionUnit? = nil
+    @State private var selectedOutputUnit: ConversionUnit? = nil
 
     var body: some View {
         NavigationStack {
@@ -31,31 +48,57 @@ struct ContentView: View {
                     }.pickerStyle(.navigationLink)
                 }
                 Section("Input") {
-                    TextField("Input value", value: $inputValue, format: .number, prompt: Text("Prompt?"))
+                    TextField("Input value", value: $inputValue, format: .number, prompt: Text("Input value"))
                         .keyboardType(.decimalPad)
                     Text("Raw: \(inputValue?.description ?? "nil")")
                     Picker("Input Unit", selection: $selectedInputUnit) {
                         ForEach(units[selectedMeasurement]!, id: \.self) {
-                            Text($0).tag(Optional($0))
+                            Text($0.id).tag(Optional($0))
                         }
                     }.pickerStyle(.segmented)
-                    Text("Raw: \(selectedInputUnit ?? "nil")")
+                    Text("Raw: \(selectedInputUnit?.id ?? "nil")")
                 }
                 Section("Output") {
-                    Text("Converted to: TODO")
+                    Text("Converted to: \(convertedValue?.description ?? "nil")")
                     Picker("Output Unit", selection: $selectedOutputUnit) {
                         ForEach(units[selectedMeasurement]!, id: \.self) {
-                            Text($0).tag(Optional($0))
+                            Text($0.id).tag(Optional($0))
                         }
                     }.pickerStyle(.segmented)
-                    Text("Raw: \(selectedOutputUnit ?? "nil")")
+                    Text("Raw: \(selectedOutputUnit?.id ?? "nil")")
                 }
             } // Form
             .navigationTitle("Conversions")
             .navigationBarTitleDisplayMode(.inline)
         } // NavigationStack
+    }// body
+
+    
+    private var convertedValue: Double? {
+        guard let inputValue = inputValue,
+              let selectedInputUnit = selectedInputUnit?.unit,
+              let selectedOutputUnit = selectedOutputUnit?.unit
+        else { return nil }
+
+        if selectedMeasurement == "temperature" {
+            let inputUnit = selectedInputUnit as! UnitTemperature
+            let outputUnit = selectedOutputUnit as! UnitTemperature
+            let input = Measurement(value: inputValue, unit: inputUnit)
+            let converted = input.converted(to: outputUnit)
+            return converted.value
+        } else if selectedMeasurement == "length" {
+            let inputUnit = selectedInputUnit as! UnitLength
+            let outputUnit = selectedOutputUnit as! UnitLength
+            let input = Measurement(value: inputValue, unit: inputUnit)
+            let converted = input.converted(to: outputUnit)
+            return converted.value
+        }
+
+        return nil
     }
+
 }
+
 
 #Preview {
     ContentView()
