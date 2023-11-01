@@ -20,6 +20,7 @@
 		2D74D4322AF19A0A006DF606 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D74D4342AF19A0A006DF606 /* GuessTheFlag.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GuessTheFlag.entitlements; sourceTree = "<group>"; };
 		2D74D4362AF19A0A006DF606 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2D74D43D2AF2EECB006DF606 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +37,7 @@
 		2D74D4222AF19A09006DF606 = {
 			isa = PBXGroup;
 			children = (
+				2D74D43D2AF2EECB006DF606 /* readme.md */,
 				2D74D42D2AF19A09006DF606 /* GuessTheFlag */,
 				2D74D42C2AF19A09006DF606 /* Products */,
 			);
