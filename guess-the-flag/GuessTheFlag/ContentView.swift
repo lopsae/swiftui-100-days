@@ -6,14 +6,21 @@ import SwiftUI
 
 struct ContentView: View {
 
+    private static let flagsToShow = 3
     @State private var countries = [
         "Estonia", "France", "Germany", "Ireland",
         "Italy", "Nigeria", "Poland", "Spain",
         "UK", "Ukraine", "US"].shuffled()
-    @State private var correctAnswer = Int.random(in: 0...2)
+    @State private var correctAnswer = Int.random(in: 0..<flagsToShow)
 
     @State private var showingScore = false
+    @State private var showingFinal = false
     @State private var scoreTitle = ""
+    
+    @State private var score = 0
+    @State private var attempts = 0
+
+    private let maxAttempts = 3
 
 
     var body: some View {
@@ -38,7 +45,7 @@ struct ContentView: View {
                         Text(countries[correctAnswer])
                             .font(.largeTitle.bold())
                     }
-                    ForEach(0...2, id: \.self) { index in
+                    ForEach(0..<Self.flagsToShow, id: \.self) { index in
                         Button {
                             flagTapped(index: index)
                         } label: {
@@ -53,25 +60,39 @@ struct ContentView: View {
                 .background(.regularMaterial)
                 .clipShape(.rect(cornerRadius: 20))
                 Spacer()
-                Text("Score: TODO")
+                Text("Score: \(score)")
                     .foregroundStyle(.white)
                     .font(.title2)
+                Text("Attempts left: \(maxAttempts - attempts)")
+                    .foregroundStyle(.white)
+                    .font(.subheadline)
                 Spacer()
             } // VStack
             .padding()
         } // ZStack
         .alert(scoreTitle, isPresented: $showingScore) {
-            Button("Try again") {}
-            Button("Continue", action: askQuestion)
+            Button("Continue", action: setNextStage)
         } message: {
-            Text("Your score is TODO")
+            Text("Your current score is \(score)")
+        }
+        .alert("Game Complete", isPresented: $showingFinal) {
+            Button("Restart", action: resetScore)
+        } message: {
+            Text("Your final score is \(score)")
         }
     } // body
 
 
     func flagTapped(index: Int) {
+        attempts += 1
+        showScore(index: index)
+    }
+
+
+    func showScore(index: Int) {
         if index == correctAnswer {
             scoreTitle = "Correct"
+            score += 1
         } else {
             scoreTitle = "Wrong"
         }
@@ -79,10 +100,29 @@ struct ContentView: View {
     }
 
 
-    func askQuestion() {
+    func setNextStage() {
+        if attempts < maxAttempts {
+            setNextFlagGuess()
+        } else {
+            showingFinal = true
+        }
+
+
+    }
+
+
+    func setNextFlagGuess() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
+
+
+    func resetScore() {
+        score = 0
+        attempts = 0
+        setNextFlagGuess()
+    }
+
 }
 
 #Preview {
