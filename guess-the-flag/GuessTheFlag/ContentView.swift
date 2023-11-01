@@ -13,15 +13,16 @@ struct ContentView: View {
         "UK", "Ukraine", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0..<flagsToShow)
 
-    @State private var showingScore = false
-    @State private var showingFinal = false
-    @State private var scoreTitle = ""
-    
+    @State private var showingCorrectAlert = false
+    @State private var showingIncorrectAlert = false
+    @State private var showingFinalAlert = false
+
     @State private var score = 0
     @State private var attempts = 0
 
     private let maxAttempts = 3
 
+    @State private var text = ""
 
     var body: some View {
         ZStack {
@@ -70,16 +71,30 @@ struct ContentView: View {
             } // VStack
             .padding()
         } // ZStack
-        .alert(scoreTitle, isPresented: $showingScore) {
+
+        // Correct flag alert
+        .alert("Correct!", isPresented: $showingCorrectAlert) {
             Button("Continue", action: setNextStage)
         } message: {
             Text("Your current score is \(score)")
         }
-        .alert("Game Complete", isPresented: $showingFinal) {
+
+        // Incorrect flag alert
+        .alert("Incorrect...", isPresented: $showingIncorrectAlert) {
+            Button("Continue", action: setNextStage)
+        } message: {
+            Text("Your current remains at \(score)")
+
+        }
+
+        // Complete game alert
+        .alert("Game Complete", isPresented: $showingFinalAlert) {
             Button("Restart", action: resetScore)
         } message: {
             Text("Your final score is \(score)")
         }
+
+
     } // body
 
 
@@ -91,12 +106,11 @@ struct ContentView: View {
 
     func showScore(index: Int) {
         if index == correctAnswer {
-            scoreTitle = "Correct"
             score += 1
+            showingCorrectAlert = true
         } else {
-            scoreTitle = "Wrong"
+            showingIncorrectAlert = true
         }
-        showingScore = true
     }
 
 
@@ -104,7 +118,7 @@ struct ContentView: View {
         if attempts < maxAttempts {
             setNextFlagGuess()
         } else {
-            showingFinal = true
+            showingFinalAlert = true
         }
 
 
