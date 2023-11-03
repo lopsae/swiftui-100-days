@@ -14,14 +14,22 @@ struct ContentView: View {
                 .foregroundStyle(.tint)
             Text("Hello, world!")
             CapsuleText("And a one!")
-            CapsuleText("And a Two!")
-            Text("And a one two three!")
+            Text("And a Two!")
                 .modifier(RedCapsuleModifier())
-            Text("Bop bop bop!")
+            Text("And a Two Three Four!")
                 .redCapsule()
         }
         .padding()
         .background(.red)
+
+        GridStack(rows: 2, columns: 2) { row, col in
+            VStack {
+                Image(systemName: "\(row*2 + col).circle")
+                Text("R\(row) C\(col)")
+            }.padding()
+            .background(.gray)
+            .clipShape(.capsule)
+        }
     }
 }
 
