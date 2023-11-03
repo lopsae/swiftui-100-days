@@ -23,12 +23,13 @@ struct ContentView: View {
         .background(.red)
 
         GridStack(rows: 2, columns: 2) { row, col in
-            VStack {
+            HStack {
                 Image(systemName: "\(row*2 + col).circle")
                 Text("R\(row) C\(col)")
             }.padding()
             .background(.gray)
             .clipShape(.capsule)
+            Text("Addendum")
         }
     }
 }

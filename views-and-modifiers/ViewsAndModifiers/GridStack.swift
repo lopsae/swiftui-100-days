@@ -10,7 +10,7 @@ struct GridStack<Content: View>: View {
 
     let rows: Int
     let columns: Int
-    let content: (Int, Int) -> Content // (row, column)
+    @ViewBuilder let content: (Int, Int) -> Content // (row, column)
 
     var body: some View {
         VStack {
