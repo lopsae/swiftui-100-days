@@ -1,11 +1,10 @@
 //
-//  ViewsAndModifiersApp.swift
-//  ViewsAndModifiers
-//
-//  Created by Maic Lopez Saenz on 11/1/23.
+// ViewsAndModifiers
 //
 
+
 import SwiftUI
+
 
 @main
 struct ViewsAndModifiersApp: App {
