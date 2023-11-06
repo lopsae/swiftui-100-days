@@ -11,8 +11,11 @@ struct ContentView: View {
     @State private var computerHand = Hand.allCases.randomElement()!
     @State private var userShouldWin = true
 
-    @State private var score = 0
+    @State private var score    = 0
     @State private var attempts = 0
+    private let maxAttempts = 3
+
+    @State private var showingFinalScore = false
 
     var body: some View {
         VStack {
@@ -43,10 +46,18 @@ struct ContentView: View {
             Text("Score: \(score)")
             Text("Attempts: \(attempts)")
         }.padding() // VStack
+            .alert("Game Complete", isPresented: $showingFinalScore) {
+                Button("Next Game") {
+                    setNextGame()
+                }
+            } message: {
+                Text("Final Score: \(score)")
+            }
+
     } // body
 
-    func challenge(with userHand: Hand) {
 
+    func challenge(with userHand: Hand) {
         if userShouldWin {
             if userHand.beats(computerHand) { score += 1 }
         } else {
@@ -54,13 +65,25 @@ struct ContentView: View {
         }
 
         attempts += 1
-        setNextHand()
+
+        if attempts < maxAttempts {
+            setNextHand()
+        } else {
+            showingFinalScore = true
+        }
     }
 
 
     func setNextHand() {
         computerHand = Hand.allCases.randomElement()!
         userShouldWin.toggle()
+    }
+
+
+    func setNextGame() {
+        score = 0
+        attempts = 0
+        setNextHand()
     }
 
 }
