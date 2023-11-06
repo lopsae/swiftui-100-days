@@ -1,22 +1,48 @@
 //
-//  ContentView.swift
-//  RockPaperScissors
+// RockPaperScissors
 //
-//  Created by Maic Lopez Saenz on 11/3/23.
-//
+
 
 import SwiftUI
 
+
 struct ContentView: View {
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
+            Text("The computer has chosen")
+            Text("🪨")
+                .font(.largeTitle)
+                .padding()
+                .background(.blue.gradient)
+                .clipShape(.circle)
+        } .padding() // VStack
+
+        VStack {
+            Text("Your choice:")
+            HStack {
+                Button(action: {}, label: {
+                    Text("🪨")
+                        .font(.largeTitle)
+                }).buttonStyle(.bordered)
+                Button(action: {}, label: {
+                    Text("📄")
+                        .font(.largeTitle)
+                }).buttonStyle(.bordered)
+                Button(action: {}, label: {
+                    Text("✂️")
+                        .font(.largeTitle)
+                }).buttonStyle(.bordered)
+            } // HStack
+        } .padding() // VStack
+
+        VStack {
+            Text("Score")
+            Text("Won: TODO")
+            Text("Attempts: TODO")
+        }.padding() // VStack
+    } // body
+
 }
 
 #Preview {
