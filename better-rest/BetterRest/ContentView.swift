@@ -28,31 +28,35 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             Form {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("When do you want to wake up?")
-                        .font(.headline)
-                    DatePicker("Enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
-                        .frame(maxWidth: .infinity)
-                    Text("Raw components: h:\(wakeUpComponents.hour) m:\(wakeUpComponents.minute)")
-                }
+                Section {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("When do you want to wake up?")
+                            .font(.headline)
+                        DatePicker("Enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+                            .frame(maxWidth: .infinity)
+                        Text("Raw components: h:\(wakeUpComponents.hour) m:\(wakeUpComponents.minute)")
+                    }
 
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Desired amount of sleep")
-                        .font(.headline)
-                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
-                }
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Desired amount of sleep")
+                            .font(.headline)
+                        Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+                    }
 
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Daily coffee intake")
-                        .font(.headline)
-                    Stepper("^[\(coffeeAmount) cup](inflect:true)", value: $coffeeAmount, in: 1...20)
-                }
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Daily coffee intake")
+                            .font(.headline)
+                        Stepper("^[\(coffeeAmount) cup](inflect:true)", value: $coffeeAmount, in: 1...20)
+                    }
+                } // Section
+
+                Text("Sleep Time: \(bedTimeEstimation)")
 
             } // VStack
             .navigationTitle("Better Rest")
             .toolbar {
-                Button("Calculate", action: calculateBedTime)
+                Button("Calculate", action: showBedTimeAlert)
             }
         } // NavigationStack
         .alert(alertTitle, isPresented: $showingAlert) {
@@ -72,18 +76,33 @@ struct ContentView: View {
     }
 
 
-    func calculateBedTime() {
+    func calculateBedTime() throws -> Date {
         let componets = wakeUpComponents
         let wakeUpSeconds = componets.hour * 3600 + componets.minute * 60
+
+        let config = MLModelConfiguration()
+        let model = try SleepCalculator(configuration: config)
+        let prediction = try model.prediction(wake: Int64(wakeUpSeconds), estimatedSleep: sleepAmount, coffee: Int64(coffeeAmount))
+
+        return  wakeUp - prediction.actualSleep
+    }
+
+
+    var bedTimeEstimation: String {
         do {
-            let config = MLModelConfiguration()
-            let model = try SleepCalculator(configuration: config)
-            let prediction = try model.prediction(wake: Int64(wakeUpSeconds), estimatedSleep: sleepAmount, coffee: Int64(coffeeAmount))
+            let bedTime = try calculateBedTime()
+            return bedTime.formatted(date: .omitted, time: .shortened)
+        } catch {
+            print(error)
+            return "Error"
+        }
+    }
 
-            let sleepTime = wakeUp - prediction.actualSleep
+    func showBedTimeAlert() {
+        do {
+            let bedTime = try calculateBedTime()
             alertTitle = "Your ideal bedtime is"
-            alertMessage = sleepTime.formatted(date: .omitted, time: .shortened)
-
+            alertMessage = bedTime.formatted(date: .omitted, time: .shortened)
         } catch {
             print(error)
             alertTitle = "Error"
