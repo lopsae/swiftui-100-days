@@ -1,11 +1,10 @@
 //
-//  ContentView.swift
-//  WordScramble
-//
-//  Created by Maic Lopez Saenz on 11/7/23.
+// WordScramble
 //
 
+
 import SwiftUI
+
 
 struct ContentView: View {
     var body: some View {

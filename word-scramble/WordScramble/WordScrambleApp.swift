@@ -1,11 +1,10 @@
 //
-//  WordScrambleApp.swift
-//  WordScramble
-//
-//  Created by Maic Lopez Saenz on 11/7/23.
+// WordScramble
 //
 
+
 import SwiftUI
+
 
 @main
 struct WordScrambleApp: App {
