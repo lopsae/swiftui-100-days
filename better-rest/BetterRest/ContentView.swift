@@ -1,11 +1,11 @@
 //
-//  ContentView.swift
-//  BetterRest
-//
-//  Created by Maic Lopez Saenz on 11/6/23.
+// BetterRest
+
 //
 
+
 import SwiftUI
+
 
 struct ContentView: View {
 
