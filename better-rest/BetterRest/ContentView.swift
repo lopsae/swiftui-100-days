@@ -4,6 +4,7 @@
 //
 
 
+import CoreML
 import SwiftUI
 
 
@@ -13,6 +14,10 @@ struct ContentView: View {
     @State private var wakeUp = Date.now
     @State private var coffeeAmount = 1
 
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    @State private var showingAlert = false
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -20,7 +25,8 @@ struct ContentView: View {
                     .font(.headline)
                 DatePicker("Enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
                     .labelsHidden()
-                
+                Text("Raw components: h:\(wakeUpComponents.hour) m:\(wakeUpComponents.minute)")
+
                 Text("Desired amount of sleep")
                     .font(.headline)
                 Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
@@ -35,21 +41,42 @@ struct ContentView: View {
                 Button("Calculate", action: calculateBedTime)
             }
         } // NavigationStack
-        Form {
-            Section {
-                Stepper("\(sleepAmount.formatted()) Hours", value: $sleepAmount, in: 4...12, step: 0.25)
-            }
-            Section {
-                Text("Date: \(wakeUp.formatted(date: .long, time: .shortened))")
-                DatePicker("Wakeup time", selection: $wakeUp, /*in: Date.now...,*/ displayedComponents: .hourAndMinute)
-                    .labelsHidden()
-            }
+        .alert(alertTitle, isPresented: $showingAlert) {
+            // Empty
+        } message: {
+            Text(alertMessage)
         }
+
     } // body
 
 
+    private var wakeUpComponents: (hour: Int, minute: Int) {
+        let components = Calendar.current.dateComponents([.hour, .minute], from: wakeUp)
+        let hour = components.hour ?? 0
+        let minute = components.minute ?? 0
+        return (hour: hour, minute: minute)
+    }
+
+
     func calculateBedTime() {
-        // TODO
+        let componets = wakeUpComponents
+        let wakeUpSeconds = componets.hour * 3600 + componets.minute * 60
+        do {
+            let config = MLModelConfiguration()
+            let model = try SleepCalculator(configuration: config)
+            let prediction = try model.prediction(wake: Int64(wakeUpSeconds), estimatedSleep: sleepAmount, coffee: Int64(coffeeAmount))
+
+            let sleepTime = wakeUp - prediction.actualSleep
+            alertTitle = "Your ideal bedtime is"
+            alertMessage = sleepTime.formatted(date: .omitted, time: .shortened)
+
+        } catch {
+            print(error)
+            alertTitle = "Error"
+            alertMessage = "There was an error estimating your bedtime"
+        }
+
+        showingAlert = true
     }
 }
 
