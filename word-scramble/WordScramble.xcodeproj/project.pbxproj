@@ -20,6 +20,7 @@
 		2D7DA3162AFB02F300BCFB3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D7DA3182AFB02F300BCFB3B /* WordScramble.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WordScramble.entitlements; sourceTree = "<group>"; };
 		2D7DA31A2AFB02F300BCFB3B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2D7DA3212AFB039400BCFB3B /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +37,7 @@
 		2D7DA3062AFB02F100BCFB3B = {
 			isa = PBXGroup;
 			children = (
+				2D7DA3212AFB039400BCFB3B /* readme.md */,
 				2D7DA3112AFB02F100BCFB3B /* WordScramble */,
 				2D7DA3102AFB02F100BCFB3B /* Products */,
 			);
