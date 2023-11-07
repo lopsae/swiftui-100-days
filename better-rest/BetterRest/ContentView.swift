@@ -21,12 +21,19 @@ struct ContentView: View {
     @State private var sleepAmount = 8.0
     @State private var coffeeAmount = 1
 
-    @State private var alertTitle = ""
-    @State private var alertMessage = ""
-    @State private var showingAlert = false
+    @State private var alertToShow: (title: String, message: String)? = nil
+
 
     var body: some View {
-        NavigationStack {
+        let alertStack = Binding<Bool> {
+            return alertToShow != nil
+        } set: {
+            if $0 == false {
+                alertToShow = nil
+            }
+        }
+
+        return NavigationStack {
             Form {
                 Section {
                     VStack(alignment: .leading, spacing: 0) {
@@ -59,10 +66,10 @@ struct ContentView: View {
                 Button("Calculate", action: showBedTimeAlert)
             }
         } // NavigationStack
-        .alert(alertTitle, isPresented: $showingAlert) {
+        .alert(alertToShow?.title ?? "", isPresented: alertStack) {
             // Empty
         } message: {
-            Text(alertMessage)
+            Text(alertToShow?.message ?? "")
         }
 
     } // body
@@ -101,15 +108,17 @@ struct ContentView: View {
     func showBedTimeAlert() {
         do {
             let bedTime = try calculateBedTime()
-            alertTitle = "Your ideal bedtime is"
-            alertMessage = bedTime.formatted(date: .omitted, time: .shortened)
+            alertToShow = (
+                title: "Your ideal bedtime is",
+                message: bedTime.formatted(date: .omitted, time: .shortened)
+            )
         } catch {
             print(error)
-            alertTitle = "Error"
-            alertMessage = "There was an error estimating your bedtime"
+            alertToShow = (
+                title: "Error",
+                message: "There was an error estimating your bedtime"
+            )
         }
-
-        showingAlert = true
     }
 }
 
