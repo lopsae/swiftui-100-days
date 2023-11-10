@@ -13,6 +13,8 @@ struct ContentView: View {
 
     var body: some View {
         List {
+            Text(textfileString)
+
             Section("Text section") {
                 Text("One text")
                 Text("Two text")
@@ -40,6 +42,12 @@ struct ContentView: View {
                 }.frame(maxWidth: .infinity)
             }
         }.listStyle(.grouped)
+    } // body
+
+
+    var textfileString: String {
+        let fileUlr = Bundle.main.url(forResource: "textfile", withExtension: nil)!
+        return (try? String(contentsOf: fileUlr)) ?? "no-file-found"
     }
 }
 
