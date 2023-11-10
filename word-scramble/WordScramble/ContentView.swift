@@ -31,11 +31,25 @@ struct ContentView: View {
                 }
             } // List
             .navigationTitle(rootWord)
+            .onAppear(perform: startGame)
             .onSubmit(addNewWord)
         } // NavigationStack
 
 
     } // body
+
+
+    func startGame() {
+        if let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt") {
+            if let startWords = try? String(contentsOf: startWordsUrl) {
+                let allWords = startWords.components(separatedBy: .newlines)
+                rootWord = allWords.randomElement() ?? "silkworm"
+                return
+            }
+        }
+
+        fatalError("Could not load starting words from bundle")
+    }
 
 
     func addNewWord() {
