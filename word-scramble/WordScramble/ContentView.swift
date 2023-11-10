@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var rootWord = ""
     @State private var newWord = ""
 
+    @FocusState private var isTextFieldFocused
+
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingErrorAlert = false
@@ -22,8 +24,10 @@ struct ContentView: View {
             List {
                 Section {
                     TextField("Enter your word", text: $newWord)
+                        .focused($isTextFieldFocused)
                         .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()   
+                        .autocorrectionDisabled()
+
                 }
 
                 Section {
@@ -39,7 +43,7 @@ struct ContentView: View {
             .onAppear(perform: startGame)
             .onSubmit(addNewWord)
             .alert(errorTitle, isPresented: $showingErrorAlert) {
-                // Default OK button
+                Button("OK") { isTextFieldFocused = true }
             } message: {
                 Text(errorMessage)
             }
@@ -114,6 +118,7 @@ struct ContentView: View {
             usedWords.insert(answer, at: 0)
         }
         newWord = ""
+        isTextFieldFocused = true
     }
 
 
