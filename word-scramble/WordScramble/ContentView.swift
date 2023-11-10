@@ -40,15 +40,14 @@ struct ContentView: View {
 
 
     func startGame() {
-        if let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt") {
-            if let startWords = try? String(contentsOf: startWordsUrl) {
-                let allWords = startWords.components(separatedBy: .newlines)
-                rootWord = allWords.randomElement() ?? "silkworm"
-                return
-            }
+        guard let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt"),
+              let startWords = try? String(contentsOf: startWordsUrl)
+        else {
+            fatalError("Could not load starting words from bundle")
         }
 
-        fatalError("Could not load starting words from bundle")
+        let allWords = startWords.components(separatedBy: .newlines)
+        rootWord = allWords.randomElement() ?? "silkworm"
     }
 
 
