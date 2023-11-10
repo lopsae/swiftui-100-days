@@ -12,6 +12,7 @@
 		2D7DA3172AFB02F300BCFB3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D7DA3162AFB02F300BCFB3B /* Assets.xcassets */; };
 		2D7DA31B2AFB02F300BCFB3B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D7DA31A2AFB02F300BCFB3B /* Preview Assets.xcassets */; };
 		2D7DA3242AFDB8B800BCFB3B /* textfile in Resources */ = {isa = PBXBuildFile; fileRef = 2D7DA3232AFDB8B800BCFB3B /* textfile */; };
+		2D7DA3262AFEAFB100BCFB3B /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2D7DA3252AFEAFB100BCFB3B /* start.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		2D7DA31A2AFB02F300BCFB3B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2D7DA3212AFB039400BCFB3B /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		2D7DA3232AFDB8B800BCFB3B /* textfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = textfile; sourceTree = "<group>"; };
+		2D7DA3252AFEAFB100BCFB3B /* start.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = start.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				2D7DA3122AFB02F100BCFB3B /* WordScrambleApp.swift */,
 				2D7DA3142AFB02F100BCFB3B /* ContentView.swift */,
+				2D7DA3252AFEAFB100BCFB3B /* start.txt */,
 				2D7DA3232AFDB8B800BCFB3B /* textfile */,
 				2D7DA3162AFB02F300BCFB3B /* Assets.xcassets */,
 				2D7DA3182AFB02F300BCFB3B /* WordScramble.entitlements */,
@@ -133,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D7DA31B2AFB02F300BCFB3B /* Preview Assets.xcassets in Resources */,
+				2D7DA3262AFEAFB100BCFB3B /* start.txt in Resources */,
 				2D7DA3172AFB02F300BCFB3B /* Assets.xcassets in Resources */,
 				2D7DA3242AFDB8B800BCFB3B /* textfile in Resources */,
 			);
