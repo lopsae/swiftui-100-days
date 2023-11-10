@@ -8,47 +8,47 @@ import SwiftUI
 
 struct ContentView: View {
 
-    private let names = ["Pedro", "Pablo", "Jose", "Jose"] 
-    // jose repeats, which produces a runtime warning
+    @State private var usedWords: [String] = []
+    @State private var rootWord = ""
+    @State private var newWord = ""
+
 
     var body: some View {
-        List {
-            Text(textfileString)
-
-            Section("Text section") {
-                Text("One text")
-                Text("Two text")
-                Text("Three text")
-            }
-
-            Section("Dynamic section") {
-                ForEach(0..<5) {
-                    Text("Dynamic Text \($0)")
+        NavigationStack {
+            List {
+                Section {
+                    TextField("Enter your word", text: $newWord)
+                        .textInputAutocapitalization(.never)
                 }
-            }
 
-            Section("Names section") {
-                ForEach(names, id: \.self) {
-                    Text("Name: \($0)")
+                Section {
+                    ForEach(usedWords, id: \.self) { word in
+                        HStack {
+                            Image(systemName: "\(word.count).circle")
+                            Text(word)
+                        }
+                    }
                 }
-            }
+            } // List
+            .navigationTitle(rootWord)
+            .onSubmit(addNewWord)
+        } // NavigationStack
 
-            Section("VStack Section") {
-                VStack(alignment: .center) {
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundStyle(.tint)
-                    Text("WordScramble!")
-                }.frame(maxWidth: .infinity)
-            }
-        }.listStyle(.grouped)
+
     } // body
 
 
-    var textfileString: String {
-        let fileUlr = Bundle.main.url(forResource: "textfile", withExtension: nil)!
-        return (try? String(contentsOf: fileUlr)) ?? "no-file-found"
+    func addNewWord() {
+        let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        guard answer.count > 0 else { return }
+
+        withAnimation {
+            usedWords.insert(answer, at: 0)
+        }
+        newWord = ""
     }
+
+
 }
 
 #Preview {
