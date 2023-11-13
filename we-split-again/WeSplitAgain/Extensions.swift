@@ -20,3 +20,15 @@ extension UITextField {
 
 }
 
+
+extension Optional where Wrapped: StringProtocol {
+
+    var orNil: String {
+        switch self {
+        case .some(let wrapped):
+            return String(wrapped)
+        case .none:
+            return "nil"
+        }
+    }
+}
