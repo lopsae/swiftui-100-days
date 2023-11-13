@@ -26,7 +26,14 @@ struct ContentView: View {
                     .onReceive(UITextField.textDidBeginEditingNotification.publisher()) {
                         notification in
                         guard let textField = notification.object as? UITextField else { return }
-                        textField.selectedTextRange = textField.fullRange
+
+                        // Queueing seems to work more consistently for
+                        // selecting the entire textfield
+                        DispatchQueue.main.async { [weak textField] in
+                            guard let textField else { return }
+                            textField.selectedTextRange = textField.fullRange
+                        }
+
                     }
 
                     Picker("Number of people", selection: $peopleCount) {
