@@ -22,7 +22,9 @@ struct ContentView: View {
                               value: $checkAmount,
                               format: .localCurrencyOrUsd())
                     .keyboardType(.decimalPad)
+                    .submitLabel(.done) // noes not show button
                     .focused($amountIsFocused)
+
                     .onReceive(UITextField.textDidBeginEditingNotification.publisher()) {
                         notification in
                         guard let textField = notification.object as? UITextField else { return }
@@ -58,13 +60,20 @@ struct ContentView: View {
                 Section("Amount per person") {
                     Text("Per person: \(totalPerPerson.asCurrency())")
                 }
-            }
+            } // Form
             .navigationTitle("WeSplit-Again")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if amountIsFocused {
-                    Button("Done") { amountIsFocused = false }
+                    Button("Done") {
+                        // Done button seems to de-focus the text field
+                        // but does not trigger a submit
+                        amountIsFocused = false
+                    }
                 }
+            }
+            .onSubmit {
+                print("🍊 Form submited")
             }
         }
     }
