@@ -14,9 +14,7 @@ struct ContentView: View {
 
     @FocusState private var isTextFieldFocused
 
-    @State private var errorTitle = ""
-    @State private var errorMessage = ""
-    @State private var showingErrorAlert = false
+    @State private var errorMessage: String? // = "Test error"
 
 
     var body: some View {
@@ -39,6 +37,16 @@ struct ContentView: View {
                         .autocorrectionDisabled()
                 } // Section
 
+                if let errorMessage {
+                    Section {
+                        VStack(alignment: .center, spacing: 5) {
+                            Image(systemName: "exclamationmark.triangle")
+                            Text(errorMessage)
+                        }.frame(maxWidth: .infinity)
+                        .foregroundStyle(.warning)
+                    }
+                }
+
                 Section {
                     ForEach(usedWords, id: \.self) { word in
                         HStack {
@@ -51,12 +59,7 @@ struct ContentView: View {
             } // List
             .navigationTitle("Word Scramble")
             .onAppear(perform: startGame)
-            .onSubmit(addNewWord)
-            .alert(errorTitle, isPresented: $showingErrorAlert) {
-                Button("OK") { isTextFieldFocused = true }
-            } message: {
-                Text(errorMessage)
-            }
+            .onSubmit(submitNewWord)
         } // NavigationStack
 
 
@@ -76,7 +79,7 @@ struct ContentView: View {
 
 
     func isAlreadyUsed(word: String) -> Bool {
-        return !usedWords.contains(word)
+        return usedWords.contains(word)
     }
 
 
@@ -105,42 +108,58 @@ struct ContentView: View {
     }
 
 
-    func addNewWord() {
-        let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        guard answer.count > 0 else { return }
-
-        guard isAlreadyUsed(word: answer) else {
-            showErrorAlert(title: "Word already used", message: "Find a different one")
-            return
-        }
-
-        guard isPermutationOfRoot(word: answer) else {
-            showErrorAlert(title: "Word is not a permutation", message: "cannot spell '\(answer)' from '\(rootWord)'")
-            return
-        }
-
-        guard isInDictionary(word: answer) else {
-            showErrorAlert(title: "Word not in dictionary", message: "Word has to be in current use")
-            return
-        }
-
-        withAnimation {
-            usedWords.insert(answer, at: 0)
-        }
-        newWord = ""
+    func submitNewWord() {
+        _ = attemptAddNewWord()
         isTextFieldFocused = true
     }
 
 
-    func showErrorAlert(title: String, message: String) {
-        errorTitle = title
-        errorMessage = message
-        showingErrorAlert = true
-    }
+    func attemptAddNewWord() -> Bool {
+        let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        var localErrorMessage: String?
 
+        if answer.count <= 0 {
+            localErrorMessage = "Empty words are not allowed"
+        } else if isAlreadyUsed(word: answer) {
+            localErrorMessage = "Word already used"
+        } else if !isPermutationOfRoot(word: answer) {
+            localErrorMessage = "Word is not a permutation"
+        } else if !isInDictionary(word: answer) {
+            localErrorMessage = "Word not in dictionary"
+        }
+
+        if let localErrorMessage {
+            withAnimation {
+                errorMessage = localErrorMessage
+            }
+            return false
+        }
+
+        withAnimation {
+            usedWords.insert(answer, at: 0)
+            errorMessage = nil
+        }
+
+        newWord = ""
+        return true
+    }
 
 }
 
+
+struct WarningStyle: ShapeStyle {
+    func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
+        Color.red
+    }
+}
+
+extension ShapeStyle where Self == WarningStyle {
+    static var warning: WarningStyle {
+        WarningStyle()
+    }
+}
+
 #Preview {
-    ContentView()
+    let view = ContentView()
+    return view
 }
