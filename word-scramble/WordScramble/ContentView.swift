@@ -64,6 +64,13 @@ struct ContentView: View {
 
             } // List
             .navigationTitle("Word Scramble")
+            .toolbar {
+                Button("Reset Game") {
+                    withAnimation {
+                        startGame()
+                    }
+                }
+            }
             .onAppear(perform: startGame)
             .onSubmit(submitNewWord)
         } // NavigationStack
@@ -80,7 +87,14 @@ struct ContentView: View {
         }
 
         let allWords = startWords.components(separatedBy: .newlines)
+
         rootWord = allWords.randomElement() ?? "silkworm"
+        newWord = ""
+        usedWords = []
+        totalScore = 0
+        errorMessage = nil
+
+        isTextFieldFocused = true
     }
 
 
