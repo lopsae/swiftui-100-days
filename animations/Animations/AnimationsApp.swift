@@ -1,8 +1,5 @@
 //
-//  AnimationsApp.swift
-//  Animations
-//
-//  Created by Maic Lopez Saenz on 11/14/23.
+// Animations
 //
 
 import SwiftUI
