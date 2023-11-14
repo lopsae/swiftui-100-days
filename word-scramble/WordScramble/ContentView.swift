@@ -22,13 +22,22 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
+                VStack {
+                    Text("Write words using the letters in")
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity)
+                    Text(rootWord)
+                        .font(.title)
+                        .frame(maxWidth: .infinity)
+                } // VStack
+
                 Section {
                     TextField("Enter your word", text: $newWord)
                         .focused($isTextFieldFocused)
                         .textInputAutocapitalization(.never)
+                        .multilineTextAlignment(.center)
                         .autocorrectionDisabled()
-
-                }
+                } // Section
 
                 Section {
                     ForEach(usedWords, id: \.self) { word in
@@ -37,9 +46,10 @@ struct ContentView: View {
                             Text(word)
                         }
                     }
-                }
+                } // Section
+
             } // List
-            .navigationTitle(rootWord)
+            .navigationTitle("Word Scramble")
             .onAppear(perform: startGame)
             .onSubmit(addNewWord)
             .alert(errorTitle, isPresented: $showingErrorAlert) {
@@ -65,12 +75,12 @@ struct ContentView: View {
     }
 
 
-    func isWordOriginal(_ word: String) -> Bool {
+    func isAlreadyUsed(word: String) -> Bool {
         return !usedWords.contains(word)
     }
 
 
-    func isWordPossible(_ word: String) -> Bool {
+    func isPermutationOfRoot(word: String) -> Bool {
         var tempWord = rootWord
 
         for letter in word {
@@ -85,7 +95,7 @@ struct ContentView: View {
     }
 
 
-    func isWordReal(_ word: String) -> Bool {
+    func isInDictionary(word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(
@@ -99,18 +109,18 @@ struct ContentView: View {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         guard answer.count > 0 else { return }
 
-        guard isWordOriginal(answer) else {
-            showErrorAlert(title: "Word already used", message: "Be more original")
+        guard isAlreadyUsed(word: answer) else {
+            showErrorAlert(title: "Word already used", message: "Find a different one")
             return
         }
 
-        guard isWordPossible(answer) else {
-            showErrorAlert(title: "Word is not possible", message: "You cannot spell that word from '\(rootWord)'")
+        guard isPermutationOfRoot(word: answer) else {
+            showErrorAlert(title: "Word is not a permutation", message: "cannot spell '\(answer)' from '\(rootWord)'")
             return
         }
 
-        guard isWordReal(answer) else {
-            showErrorAlert(title: "Word not recognized", message: "You can't just make them up, you know!")
+        guard isInDictionary(word: answer) else {
+            showErrorAlert(title: "Word not in dictionary", message: "Word has to be in current use")
             return
         }
 
