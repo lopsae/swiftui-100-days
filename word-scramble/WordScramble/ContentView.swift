@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var usedWords: [String] = []
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var totalScore = 0
 
     @FocusState private var isTextFieldFocused
 
@@ -48,6 +49,11 @@ struct ContentView: View {
                 }
 
                 Section {
+                    if totalScore > 0 {
+                        Text("Total score: \(totalScore)")
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity)
+                    }
                     ForEach(usedWords, id: \.self) { word in
                         HStack {
                             Image(systemName: "\(word.count).circle")
@@ -143,6 +149,7 @@ struct ContentView: View {
         }
 
         withAnimation {
+            totalScore += answer.count
             usedWords.insert(answer, at: 0)
             errorMessage = nil
         }
