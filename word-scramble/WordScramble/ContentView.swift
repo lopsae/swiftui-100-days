@@ -78,6 +78,11 @@ struct ContentView: View {
     }
 
 
+    func isMinimalLength(word: String) -> Bool {
+        return word.count >= 3
+    }
+
+
     func isAlreadyUsed(word: String) -> Bool {
         return usedWords.contains(word)
     }
@@ -117,9 +122,11 @@ struct ContentView: View {
     func attemptAddNewWord() -> Bool {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         var localErrorMessage: String?
-
+        
         if answer.count <= 0 {
             localErrorMessage = "Empty words are not allowed"
+        } else if !isMinimalLength(word: answer) {
+            localErrorMessage = "Word should have at least 3 letters"
         } else if isAlreadyUsed(word: answer) {
             localErrorMessage = "Word already used"
         } else if !isPermutationOfRoot(word: answer) {
