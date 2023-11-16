@@ -14,9 +14,15 @@ struct Navigator: View {
             List {
                 NavigationLink("Animation examples", value: Destination.animationExamples)
                 NavigationLink("Sphinxes", value: Destination.sphinxes)
+                NavigationLink("A String (does not work)", value: "destinationString")
             }.listStyle(.grouped)
             .navigationDestination(for: Destination.self) { destination in
                 destination.view
+            }
+            .navigationDestination(for: String.self) { string in
+                // viewStack type limits the values that can be pushed to the stack
+                // the string value cannot be used, produces a runtime warning in console
+                Text("Simply a string")
             }
             .navigationTitle("Animations")
         }
