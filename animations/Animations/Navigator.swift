@@ -7,17 +7,16 @@ import SwiftUI
 
 
 struct Navigator: View {
-    @State private var viewStack: [Destination] = []
+    @State private var viewStack: [Destination] = [.animationExamples]
 
     var body: some View {
         NavigationStack(path: $viewStack) {
             List {
-                NavigationLink("Animation examples", value: Destination("examples"))
+                NavigationLink("Animation examples", value: Destination.animationExamples)
+                NavigationLink("Sphinxes", value: Destination.sphinxes)
             }.listStyle(.grouped)
             .navigationDestination(for: Destination.self) { destination in
-                if destination.destination == "examples" {
-                    AnimationExamples()
-                }
+                destination.view
             }
             .navigationTitle("Animations")
         }
@@ -25,13 +24,19 @@ struct Navigator: View {
 }
 
 
-struct Destination: Hashable {
-    let destination: String
+enum Destination: Hashable {
 
-    init(_ destination: String) {
-        self.destination = destination
+    case animationExamples
+    case sphinxes
+
+    @ViewBuilder var view: some View {
+        switch self {
+        case .animationExamples: AnimationExamples()
+        case .sphinxes:          Text("Sphinx of black quartz")
+        }
     }
 }
+
 
 #Preview {
     Navigator()
