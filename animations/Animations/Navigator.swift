@@ -10,8 +10,8 @@ struct Navigator: View {
     var body: some View {
         NavigationStack {
             List {
-                NavigationLink("Animations examples") {
-                    ContentView()
+                NavigationLink("Animation examples") {
+                    AnimationExamples()
                 }
             }.listStyle(.grouped)
             .navigationTitle("Animations")

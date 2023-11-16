@@ -6,7 +6,7 @@
 import SwiftUI
 
 
-struct ContentView: View {
+struct AnimationExamples: View {
 
     @State private var dragOffset = CGSize.zero
     @State private var compoundTrigger = false
@@ -115,5 +115,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    AnimationExamples()
 }
