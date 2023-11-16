@@ -13,11 +13,34 @@ struct ContentView: View {
     @State private var rotationAmount = Double.zero
     @State private var scaleFactor = 1.0
 
-//    @State
+    private let draggableWord = Array("Draggable")
+    @State private var backgroundEnabled = false
+    @State private var wordDragOffset = CGSize.zero
 
 
     var body: some View {
         List {
+            Section("Word drag") {
+                HStack(spacing: 0) {
+                    let enumerated = Array(draggableWord.enumerated())
+                    ForEach(enumerated, id: \.offset) { item in
+                        let linearDelay = Animation.linear.delay(Double(item.offset) / 20)
+                        Text(String(item.element))
+                            .padding(5)
+                            .font(.title)
+                            .background(backgroundEnabled ? .blue : .red)
+                            .offset(wordDragOffset)
+                            .animation(linearDelay, value: wordDragOffset)
+                    }
+                    .gesture(DragGesture()
+                        .onChanged { wordDragOffset = $0.translation }
+                        .onEnded { _ in
+                            wordDragOffset = .zero
+                            backgroundEnabled.toggle()
+                        }
+                    )
+                }.frame(maxWidth: .infinity, minHeight: 120)
+            } // Section
 
             Section("Drag animation") {
                 LinearGradient(colors: [.yellow, .red], startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -36,7 +59,7 @@ struct ContentView: View {
                             }
                         }
                     )
-            }
+            } // Section
 
             Section("Rotation animation") {
                 Button("Rotate me") {
