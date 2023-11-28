@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D3141882B16925100337469 /* TransitionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3141872B16925100337469 /* TransitionExamples.swift */; };
 		2D7DA3362B0409C200BCFB3B /* AnimationsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DA3352B0409C200BCFB3B /* AnimationsApp.swift */; };
 		2D7DA3382B0409C200BCFB3B /* AnimationExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DA3372B0409C200BCFB3B /* AnimationExamples.swift */; };
 		2D7DA33A2B0409C300BCFB3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D7DA3392B0409C300BCFB3B /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D3141872B16925100337469 /* TransitionExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionExamples.swift; sourceTree = "<group>"; };
 		2D7DA3322B0409C200BCFB3B /* Animations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D7DA3352B0409C200BCFB3B /* AnimationsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsApp.swift; sourceTree = "<group>"; };
 		2D7DA3372B0409C200BCFB3B /* AnimationExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationExamples.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				2D7DA3352B0409C200BCFB3B /* AnimationsApp.swift */,
 				2D7DA3442B06B63100BCFB3B /* Navigator.swift */,
 				2D7DA3372B0409C200BCFB3B /* AnimationExamples.swift */,
+				2D3141872B16925100337469 /* TransitionExamples.swift */,
 				2D7DA3392B0409C300BCFB3B /* Assets.xcassets */,
 				2D7DA33B2B0409C300BCFB3B /* Animations.entitlements */,
 				2D7DA33C2B0409C300BCFB3B /* Preview Content */,
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D7DA3382B0409C200BCFB3B /* AnimationExamples.swift in Sources */,
+				2D3141882B16925100337469 /* TransitionExamples.swift in Sources */,
 				2D7DA3452B06B63100BCFB3B /* Navigator.swift in Sources */,
 				2D7DA3362B0409C200BCFB3B /* AnimationsApp.swift in Sources */,
 			);

@@ -7,12 +7,13 @@ import SwiftUI
 
 
 struct Navigator: View {
-    @State private var viewStack: [Destination] = [.animationExamples]
+    @State private var viewStack: [Destination] = [.transitionExamples]
 
     var body: some View {
         NavigationStack(path: $viewStack) {
             List {
                 NavigationLink("Animation examples", value: Destination.animationExamples)
+                NavigationLink("Transition exampels", value: Destination.transitionExamples)
                 NavigationLink("Sphinxes", value: Destination.sphinxes)
                 NavigationLink("A String (does not work)", value: "destinationString")
             }.listStyle(.grouped)
@@ -33,11 +34,13 @@ struct Navigator: View {
 enum Destination: Hashable {
 
     case animationExamples
+    case transitionExamples
     case sphinxes
 
     @ViewBuilder var view: some View {
         switch self {
         case .animationExamples: AnimationExamples()
+        case .transitionExamples: TransitionExamples()
         case .sphinxes:          Text("Sphinx of black quartz")
         }
     }
