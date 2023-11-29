@@ -50,10 +50,14 @@ struct ContentView: View {
 struct SecondView: View {
 
     let name: String
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         Text("Hello \(name)")
         Text("Second view")
+        Button("Dismiss") {
+            dismiss()
+        }.buttonStyle(.bordered)
     }
 
 }
