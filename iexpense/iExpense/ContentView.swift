@@ -10,6 +10,8 @@ struct ContentView: View {
     @State private var user = User()
     @State private var isSheetVisible = false
 
+    @AppStorage("tapCounter") private var tapCounter = 0
+
     @State private var numbers: [Int] = [1, 2, 3]
     @State private var nextNumber = 4
 
@@ -24,6 +26,13 @@ struct ContentView: View {
                         isSheetVisible.toggle()
                     }.buttonStyle(.bordered)
                         .frame(maxWidth: .infinity)
+                } // Section
+
+                Section {
+                    Button("Tap count: \(tapCounter)") {
+                        tapCounter += 1
+                    }.buttonStyle(.bordered)
+                    .frame(maxWidth: .infinity)
                 } // Section
 
                 Section {
