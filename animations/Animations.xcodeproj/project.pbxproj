@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D3141882B16925100337469 /* TransitionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3141872B16925100337469 /* TransitionExamples.swift */; };
 		2D31418A2B16EAC700337469 /* CornerRotateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3141892B16EAC700337469 /* CornerRotateModifier.swift */; };
+		2D31418C2B16ED4C00337469 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 2D31418B2B16ED4C00337469 /* readme.md */; };
 		2D7DA3362B0409C200BCFB3B /* AnimationsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DA3352B0409C200BCFB3B /* AnimationsApp.swift */; };
 		2D7DA3382B0409C200BCFB3B /* AnimationExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DA3372B0409C200BCFB3B /* AnimationExamples.swift */; };
 		2D7DA33A2B0409C300BCFB3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D7DA3392B0409C300BCFB3B /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		2D3141872B16925100337469 /* TransitionExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionExamples.swift; sourceTree = "<group>"; };
 		2D3141892B16EAC700337469 /* CornerRotateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRotateModifier.swift; sourceTree = "<group>"; };
+		2D31418B2B16ED4C00337469 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		2D7DA3322B0409C200BCFB3B /* Animations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D7DA3352B0409C200BCFB3B /* AnimationsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsApp.swift; sourceTree = "<group>"; };
 		2D7DA3372B0409C200BCFB3B /* AnimationExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationExamples.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 		2D7DA3292B0409C200BCFB3B = {
 			isa = PBXGroup;
 			children = (
+				2D31418B2B16ED4C00337469 /* readme.md */,
 				2D7DA3342B0409C200BCFB3B /* Animations */,
 				2D7DA3332B0409C200BCFB3B /* Products */,
 			);
@@ -137,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D7DA33E2B0409C300BCFB3B /* Preview Assets.xcassets in Resources */,
+				2D31418C2B16ED4C00337469 /* readme.md in Resources */,
 				2D7DA33A2B0409C300BCFB3B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
