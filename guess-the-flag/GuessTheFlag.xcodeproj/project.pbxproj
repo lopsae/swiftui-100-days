@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D31418E2B16F60800337469 /* SelectedFlagModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D31418D2B16F60800337469 /* SelectedFlagModifier.swift */; };
 		2D74D42F2AF19A09006DF606 /* GuessTheFlagApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D74D42E2AF19A09006DF606 /* GuessTheFlagApp.swift */; };
 		2D74D4312AF19A09006DF606 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D74D4302AF19A09006DF606 /* ContentView.swift */; };
 		2D74D4332AF19A0A006DF606 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D74D4322AF19A0A006DF606 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D31418D2B16F60800337469 /* SelectedFlagModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFlagModifier.swift; sourceTree = "<group>"; };
 		2D74D42B2AF19A09006DF606 /* GuessTheFlag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuessTheFlag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D74D42E2AF19A09006DF606 /* GuessTheFlagApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTheFlagApp.swift; sourceTree = "<group>"; };
 		2D74D4302AF19A09006DF606 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				2D74D42E2AF19A09006DF606 /* GuessTheFlagApp.swift */,
 				2D74D4302AF19A09006DF606 /* ContentView.swift */,
+				2D31418D2B16F60800337469 /* SelectedFlagModifier.swift */,
 				2D74D4322AF19A0A006DF606 /* Assets.xcassets */,
 				2D74D4342AF19A0A006DF606 /* GuessTheFlag.entitlements */,
 				2D74D4352AF19A0A006DF606 /* Preview Content */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D31418E2B16F60800337469 /* SelectedFlagModifier.swift in Sources */,
 				2D74D4312AF19A09006DF606 /* ContentView.swift in Sources */,
 				2D74D42F2AF19A09006DF606 /* GuessTheFlagApp.swift in Sources */,
 			);

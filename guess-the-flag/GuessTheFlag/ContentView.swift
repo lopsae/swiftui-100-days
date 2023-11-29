@@ -62,11 +62,7 @@ struct ContentView: View {
                             Image(countries[index])
                                 .clipShape(.buttonBorder)
                                 .shadow(radius: 5)
-                                .opacity(selectedFlag == nil ? 1 : selectedFlag == index ? 1 : 0.5)
-                                .rotation3DEffect(
-                                    flagSpin[index] ? .zero : .degrees(360),
-                                    axis: (x: 0.0, y: 1.0, z: 0.0)
-                                )
+                                .selectedFlag(index: index, selected: selectedFlag)
                         }
                     }
                 } // VStack
