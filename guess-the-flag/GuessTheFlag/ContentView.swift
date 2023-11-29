@@ -18,7 +18,6 @@ struct ContentView: View {
     @State private var showingFinalAlert = false
 
     @State private var selectedFlag: Int?
-    @State private var flagSpin = Array<Bool>(repeating: false, count: flagsToShow)
 
     @State private var score = 0
     @State private var attempts = 0
@@ -54,7 +53,6 @@ struct ContentView: View {
                             flagTapped(index: index)
                             withAnimation(.easeInOut(duration: 1), completionCriteria: .logicallyComplete) {
                                 selectedFlag = index
-                                flagSpin[index] = true
                             } completion:  {
                                 print("🎥 Animation completed")
                             }
@@ -136,7 +134,6 @@ struct ContentView: View {
     func setNextFlagGuess() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
-        flagSpin = .init(repeating: false, count: Self.flagsToShow)
         selectedFlag = nil
     }
 

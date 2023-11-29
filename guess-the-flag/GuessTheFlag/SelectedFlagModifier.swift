@@ -16,11 +16,15 @@ struct SelectedFlagModifier: ViewModifier {
             : .degrees(360)
 
         let opacity = selection == .faded
-            ? 0.5
+            ? 0.3
+            : 1.0
+        let scale = selection == .faded
+            ? 0.8
             : 1.0
 
         content
             .opacity(opacity)
+            .scaleEffect(scale)
             .rotation3DEffect(rotation, axis: (x: 0.0, y: 1.0, z: 0.0))
     }
 
