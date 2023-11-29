@@ -17,6 +17,9 @@ struct ContentView: View {
     @State private var showingIncorrectAlert = false
     @State private var showingFinalAlert = false
 
+    @State private var selectedFlag: Int?
+    @State private var flagSpin = Array<Bool>(repeating: false, count: flagsToShow)
+
     @State private var score = 0
     @State private var attempts = 0
 
@@ -49,10 +52,21 @@ struct ContentView: View {
                     ForEach(0..<Self.flagsToShow, id: \.self) { index in
                         Button {
                             flagTapped(index: index)
+                            withAnimation(.easeInOut(duration: 1), completionCriteria: .logicallyComplete) {
+                                selectedFlag = index
+                                flagSpin[index] = true
+                            } completion:  {
+                                print("🎥 Animation completed")
+                            }
                         } label: {
                             Image(countries[index])
                                 .clipShape(.buttonBorder)
                                 .shadow(radius: 5)
+                                .opacity(selectedFlag == nil ? 1 : selectedFlag == index ? 1 : 0.5)
+                                .rotation3DEffect(
+                                    flagSpin[index] ? .zero : .degrees(360),
+                                    axis: (x: 0.0, y: 1.0, z: 0.0)
+                                )
                         }
                     }
                 } // VStack
@@ -120,14 +134,14 @@ struct ContentView: View {
         } else {
             showingFinalAlert = true
         }
-
-
     }
 
 
     func setNextFlagGuess() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        flagSpin = .init(repeating: false, count: Self.flagsToShow)
+        selectedFlag = nil
     }
 
 
