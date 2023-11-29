@@ -1,8 +1,5 @@
 //
-//  iExpenseApp.swift
-//  iExpense
-//
-//  Created by Maic Lopez Saenz on 11/29/23.
+// iExpense
 //
 
 import SwiftUI
