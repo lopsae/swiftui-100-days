@@ -13,7 +13,7 @@ struct ExpensesView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expenses.items, id: \.name) { item in
+                ForEach(expenses.items) { item in
                     Text(item.name)
                 }
                 .onDelete(perform: removeItems(at:))
@@ -21,7 +21,10 @@ struct ExpensesView: View {
             .navigationTitle("Expenses")
             .toolbar {
                 Button("Add Expense") {
-                    let newExpense = ExpenseItem(name: "Test", type: "Personal", amount: 10.0)
+                    let componentSet: Set = [Calendar.Component.hour, .minute, .second, .nanosecond]
+                    let dateComponents = Calendar.current.dateComponents(componentSet, from: .now)
+                    let name = "Test-\(dateComponents.hour!)\(dateComponents.minute!)\(dateComponents.second!)\(dateComponents.nanosecond!)"
+                    let newExpense = ExpenseItem(name: name, type: "Personal", amount: 10.0)
                     expenses.items.append(newExpense)
                 }
             }
