@@ -16,6 +16,7 @@
 		2D3141AF2B18191000337469 /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3141AE2B18191000337469 /* ExpensesView.swift */; };
 		2D3141B12B18217A00337469 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3141B02B18217A00337469 /* AddExpenseView.swift */; };
 		2D3141B32B19549800337469 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3141B22B19549800337469 /* Extensions.swift */; };
+		2D3141B52B1956BC00337469 /* Expenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3141B42B1956BC00337469 /* Expenses.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		2D3141AE2B18191000337469 /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
 		2D3141B02B18217A00337469 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
 		2D3141B22B19549800337469 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		2D3141B42B1956BC00337469 /* Expenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expenses.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				2D3141AE2B18191000337469 /* ExpensesView.swift */,
 				2D3141B02B18217A00337469 /* AddExpenseView.swift */,
 				2D3141AC2B1817BB00337469 /* ExpenseItem.swift */,
+				2D3141B42B1956BC00337469 /* Expenses.swift */,
 				2D3141B22B19549800337469 /* Extensions.swift */,
 				2D31419F2B17BDF000337469 /* Assets.xcassets */,
 				2D3141A12B17BDF000337469 /* iExpense.entitlements */,
@@ -161,6 +164,7 @@
 				2D3141B12B18217A00337469 /* AddExpenseView.swift in Sources */,
 				2D31419C2B17BDEF00337469 /* iExpenseApp.swift in Sources */,
 				2D3141AF2B18191000337469 /* ExpensesView.swift in Sources */,
+				2D3141B52B1956BC00337469 /* Expenses.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
