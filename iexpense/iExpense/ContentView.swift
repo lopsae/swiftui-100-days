@@ -7,7 +7,7 @@ import Observation
 
 struct ContentView: View {
 
-    @State private var user = User()
+    @State private var user = User(firstName: "Sphinx", lastName: "Quartz")
     @State private var isSheetVisible = false
 
     @AppStorage("tapCounter") private var tapCounter = 0
@@ -25,7 +25,25 @@ struct ContentView: View {
                     Button("Show sheet") {
                         isSheetVisible.toggle()
                     }.buttonStyle(.bordered)
-                        .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity)
+                    Button("Store user") {
+                        let encoder = JSONEncoder()
+                        if let data = try? encoder.encode(user) {
+                            UserDefaults.standard.set(data, forKey: "UserObject")
+                            print("User saved")
+                        }
+                    }.buttonStyle(.bordered)
+                    .frame(maxWidth: .infinity)
+                    Button("Load user") {
+                        let decoder = JSONDecoder()
+                        if let data = UserDefaults.standard.data(forKey: "UserObject"),
+                           let decoded = try? decoder.decode(User.self, from: data)
+                        {
+                            user = decoded
+                            print("User loaded")
+                        }
+                    }.buttonStyle(.bordered)
+                    .frame(maxWidth: .infinity)
                 } // Section
 
                 Section {
@@ -56,14 +74,6 @@ struct ContentView: View {
             .sheet(isPresented: $isSheetVisible) {
                 SecondView(name: user.firstName)
             }
-            .onAppear {
-                let oneUser = User()
-                let otherUser = oneUser
-                otherUser.lastName = "Malachite"
-
-                print("One: \(oneUser)")
-                print("Other: \(otherUser)")
-            }
         } // NavigationStack
     } // body
 
@@ -74,14 +84,10 @@ struct ContentView: View {
 }
 
 
-@Observable class User: CustomStringConvertible {
+struct User: Codable {
 
-    var firstName: String = "Black"
-    var lastName: String = "Quartz"
-
-    var description: String {
-        "User firstName:\(firstName) lastName:\(lastName)"
-    }
+    var firstName: String
+    var lastName: String
 
 }
 
