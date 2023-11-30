@@ -35,6 +35,7 @@ class Expenses {
         }
     }
 
+
     init(storage: UserDefaults) {
         self.storage = storage
         if let storedData = storage.data(forKey: Self.storageKey),
@@ -50,6 +51,15 @@ class Expenses {
     init(items: [ExpenseItem]) {
         self.storage = nil
         self.items = items
+    }
+
+
+    static var preview: Expenses {
+        return Expenses(items: [
+            .init(name: "Antique", type: "Personal", amount: 57.0),
+            .init(name: "Bubbles", type: "Business", amount: 12.0),
+            .init(name: "Chocolate", type: "Personal", amount: 10.0),
+        ])
     }
 
 }

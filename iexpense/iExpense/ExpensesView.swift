@@ -49,6 +49,6 @@ struct ExpensesView: View {
 
 
 #Preview {
-    ExpensesView(expenses: Expenses(items: []))
+    ExpensesView(expenses: Expenses.preview)
 }
 
