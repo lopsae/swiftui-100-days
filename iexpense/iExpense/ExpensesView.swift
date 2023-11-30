@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ExpensesView: View {
 
-    @State private var expenses = Expenses()
+    @State private(set) var expenses: Expenses
 
     @State private var isAddExpensesVisible = false
 
@@ -49,6 +49,6 @@ struct ExpensesView: View {
 
 
 #Preview {
-    ExpensesView()
+    ExpensesView(expenses: Expenses(items: []))
 }
 

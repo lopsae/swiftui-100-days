@@ -8,7 +8,8 @@ import SwiftUI
 struct iExpenseApp: App {
     var body: some Scene {
         WindowGroup {
-            ExpensesView()
+            let expenses = Expenses(storage: UserDefaults.standard)
+            ExpensesView(expenses: expenses)
         }
     }
 }
