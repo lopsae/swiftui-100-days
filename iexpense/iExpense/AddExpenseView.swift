@@ -9,11 +9,8 @@ import SwiftUI
 struct AddExpenseView: View {
     
     @State private var name = ""
-    @State private var type = "Personal"
+    @State private var category: ExpenseCategory = .personal
     @State private var amount = 10.0
-
-    // TODO: could be an enum
-    let types = ["Business", "Personal"]
 
     var expenses: Expenses
 
@@ -24,9 +21,9 @@ struct AddExpenseView: View {
         NavigationStack {
             Form {
                 TextField("Name", text: $name)
-                Picker("Type", selection: $type) {
-                    ForEach(types, id: \.self) {
-                        Text($0)
+                Picker("Category", selection: $category) {
+                    ForEach(ExpenseCategory.allCases, id: \.self) {
+                        Text($0.display)
                     }
                 }
                 TextField("Amount", value: $amount, format: .localCurrencyOrUsd())
@@ -36,7 +33,7 @@ struct AddExpenseView: View {
             .toolbar {
                 Button("Save") {
                     let newExpense = ExpenseItem(
-                        name: name, type: type, amount: amount)
+                        name: name, category: category, amount: amount)
                     expenses.items.append(newExpense)
                     dismiss()
                 }

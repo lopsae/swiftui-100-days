@@ -20,7 +20,7 @@ struct ExpensesView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(item.name).font(.headline)
-                            Text(item.type)
+                            Text(item.category.display)
                         }
                         Spacer()
                         Text(item.amount, format: .localCurrencyOrUsd())
@@ -34,7 +34,7 @@ struct ExpensesView: View {
                     let componentSet: Set = [Calendar.Component.hour, .minute, .second, .nanosecond]
                     let dateComponents = Calendar.current.dateComponents(componentSet, from: .now)
                     let name = "Test-\(dateComponents.hour!)\(dateComponents.minute!)\(dateComponents.second!)\(dateComponents.nanosecond!)"
-                    let newExpense = ExpenseItem(name: name, type: "Personal", amount: 10.0)
+                    let newExpense = ExpenseItem(name: name, category: .personal, amount: 10.0)
                     expenses.items.append(newExpense)
                 }
                 Button("Add Expense", systemImage: "plus") {
