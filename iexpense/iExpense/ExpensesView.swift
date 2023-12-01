@@ -15,7 +15,6 @@ struct ExpensesView: View {
     var body: some View {
         NavigationStack {
             List {
-                // TODO: can a default element be added for empty lists?
                 ForEach(expenses.items) { item in
                     HStack {
                         VStack(alignment: .leading) {
@@ -28,6 +27,13 @@ struct ExpensesView: View {
                 }
                 .onDelete(perform: removeItems(at:))
             } // List
+            .overlay {
+                if (expenses.items.isEmpty) {
+                    Text("No expenses recorded")
+                } else {
+                    EmptyView()
+                }
+            }
             .navigationTitle("Expenses")
             .toolbar {
                 Button("Add Test") {
@@ -55,7 +61,11 @@ struct ExpensesView: View {
 }
 
 
-#Preview {
+#Preview("Empty List") {
+    ExpensesView(expenses: Expenses(items: []))
+}
+
+#Preview("With items") {
     ExpensesView(expenses: Expenses.preview)
 }
 
