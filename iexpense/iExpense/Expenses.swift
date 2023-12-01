@@ -44,9 +44,10 @@ import Observation
 
     static var preview: Expenses {
         return Expenses(items: [
-            .init(name: "Antique", category: .personal, amount: 57.0),
-            .init(name: "Bubbles", category: .business, amount: 12.0),
-            .init(name: "Chocolate", category: .personal, amount: 10.0),
+            .init(name: "Antique", category: .personal, amount: 120.0),
+            .init(name: "Bubbles", category: .business, amount: 75.0),
+            .init(name: "Chocolate", category: .personal, amount: 40.0),
+            .init(name: "Dandelions", category: .personal, amount: 5.0)
         ])
     }
 

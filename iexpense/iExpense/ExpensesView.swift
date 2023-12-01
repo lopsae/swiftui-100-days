@@ -23,7 +23,7 @@ struct ExpensesView: View {
                         }
                         Spacer()
                         Text(item.amount, format: .localCurrencyOrUsd())
-                    }
+                    }.expenseBackground(amount: item.amount)
                 }
                 .onDelete(perform: removeItems(at:))
             } // List
@@ -61,11 +61,12 @@ struct ExpensesView: View {
 }
 
 
-#Preview("Empty List") {
-    ExpensesView(expenses: Expenses(items: []))
-}
-
 #Preview("With items") {
     ExpensesView(expenses: Expenses.preview)
+}
+
+
+#Preview("Empty List") {
+    ExpensesView(expenses: Expenses(items: []))
 }
 
