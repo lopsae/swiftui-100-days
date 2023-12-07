@@ -55,7 +55,15 @@ struct ExpensesView: View {
 
 
     private func removeItems(at offsets: IndexSet) {
-        expenses.items.remove(atOffsets: offsets)
+        if expenses.items.count == 1 {
+            // remove last one with animation to transition to overlay
+            withAnimation {
+                expenses.items.remove(atOffsets: offsets)
+            }
+        } else {
+            expenses.items.remove(atOffsets: offsets)
+        }
+
     }
 
 }
