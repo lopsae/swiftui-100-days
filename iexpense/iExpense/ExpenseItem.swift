@@ -14,6 +14,15 @@ struct ExpenseItem: Identifiable, Codable, Equatable {
     let category: ExpenseCategory
     let amount: Double
 
+
+    static func makePreviewExample(category: ExpenseCategory) -> ExpenseItem {
+        let componentSet: Set = [Calendar.Component.minute, .nanosecond]
+        let dateComponents = Calendar.current.dateComponents(componentSet, from: .now)
+        let name = "\(category.display)-\(dateComponents.minute!).\(dateComponents.nanosecond! % 1000)"
+        let amount = [200.0, 100, 75, 20, 5].randomElement()!
+        return ExpenseItem(name: name, category: category, amount: amount)
+    }
+
 }
 
 

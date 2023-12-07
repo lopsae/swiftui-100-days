@@ -51,11 +51,12 @@ struct ExpensesView: View {
             }
             .navigationTitle("Expenses")
             .toolbar {
-                Button("Add Test") {
-                    let componentSet: Set = [Calendar.Component.hour, .minute, .second, .nanosecond]
-                    let dateComponents = Calendar.current.dateComponents(componentSet, from: .now)
-                    let name = "Test-\(dateComponents.hour!)\(dateComponents.minute!)\(dateComponents.second!)\(dateComponents.nanosecond!)"
-                    let newExpense = ExpenseItem(name: name, category: .personal, amount: 10.0)
+                Button("Add P") {
+                    let newExpense = ExpenseItem.makePreviewExample(category: .personal)
+                    expenses.items.append(newExpense)
+                }
+                Button("Add B") {
+                    let newExpense = ExpenseItem.makePreviewExample(category: .business)
                     expenses.items.append(newExpense)
                 }
                 Button("Add Expense", systemImage: "plus") {
