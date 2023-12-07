@@ -15,17 +15,32 @@ struct ExpensesView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expenses.items) { item in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(item.name).font(.headline)
-                            Text(item.category.display)
+                Section("Business") {
+                    ForEach(businessExpenses) { item in
+                        ExpenseCell(item: item)
+                    }
+                    .onDelete { indexSet in
+                        var items: [ExpenseItem] = []
+                        items.reserveCapacity(indexSet.count)
+                        for index in indexSet {
+                            items.append(businessExpenses[index])
                         }
-                        Spacer()
-                        Text(item.amount, format: .localCurrencyOrUsd())
-                    }.expenseBackground(amount: item.amount)
-                }
-                .onDelete(perform: removeItems(at:))
+                        removeExpenses(items)
+                    }
+                } // Section
+                Section("Personal") {
+                    ForEach(personalExpenses) { item in
+                        ExpenseCell(item: item)
+                    }
+                    .onDelete { indexSet in
+                        var items: [ExpenseItem] = []
+                        items.reserveCapacity(indexSet.count)
+                        for index in indexSet {
+                            items.append(personalExpenses[index])
+                        }
+                        removeExpenses(items)
+                    }
+                } // Section
             } // List
             .overlay {
                 if (expenses.items.isEmpty) {
@@ -54,16 +69,56 @@ struct ExpensesView: View {
     } // body
 
 
-    private func removeItems(at offsets: IndexSet) {
-        if expenses.items.count == 1 {
-            // remove last one with animation to transition to overlay
-            withAnimation {
-                expenses.items.remove(atOffsets: offsets)
+    private var personalExpenses: [ExpenseItem] {
+        expenses.items.filter {
+            $0.category == .personal
+        }
+    }
+
+
+    private var businessExpenses: [ExpenseItem] {
+        expenses.items.filter {
+            $0.category == .business
+        }
+    }
+
+
+    private func removeExpenses(_ items: [ExpenseItem]) {
+        var indexSet = IndexSet()
+        for item in items {
+            if let index = expenses.items.firstIndex(of: item) {
+                indexSet.insert(index)
             }
-        } else {
-            expenses.items.remove(atOffsets: offsets)
         }
 
+        guard !indexSet.isEmpty else { return }
+
+        if expenses.items.count == indexSet.count {
+            // remove last items with animation to transition to overlay
+            withAnimation {
+                expenses.items.remove(atOffsets: indexSet)
+            }
+        } else {
+            expenses.items.remove(atOffsets: indexSet)
+        }
+    }
+
+}
+
+
+private struct ExpenseCell: View {
+
+    let item: ExpenseItem
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(item.name).font(.headline)
+                Text(item.category.display)
+            }
+            Spacer()
+            Text(item.amount, format: .localCurrencyOrUsd())
+        }.expenseBackground(amount: item.amount)
     }
 
 }
