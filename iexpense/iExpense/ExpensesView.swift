@@ -15,32 +15,12 @@ struct ExpensesView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Business") {
-                    ForEach(businessExpenses) { item in
-                        ExpenseCell(item: item)
-                    }
-                    .onDelete { indexSet in
-                        var items: [ExpenseItem] = []
-                        items.reserveCapacity(indexSet.count)
-                        for index in indexSet {
-                            items.append(businessExpenses[index])
-                        }
-                        removeExpenses(items)
-                    }
-                } // Section
-                Section("Personal") {
-                    ForEach(personalExpenses) { item in
-                        ExpenseCell(item: item)
-                    }
-                    .onDelete { indexSet in
-                        var items: [ExpenseItem] = []
-                        items.reserveCapacity(indexSet.count)
-                        for index in indexSet {
-                            items.append(personalExpenses[index])
-                        }
-                        removeExpenses(items)
-                    }
-                } // Section
+                ExpenseSection(category: .personal, items: personalExpenses) { items in
+                    removeExpenses(items)
+                }
+                ExpenseSection(category: .business, items: businessExpenses) { items in
+                    removeExpenses(items)
+                }
             } // List
             .overlay {
                 if (expenses.items.isEmpty) {
@@ -102,6 +82,31 @@ struct ExpensesView: View {
         } else {
             expenses.items.remove(atOffsets: indexSet)
         }
+    }
+
+}
+
+
+private struct ExpenseSection: View {
+
+    let category: ExpenseCategory
+    let items: [ExpenseItem]
+    let onDelete: ([ExpenseItem]) -> Void
+
+    var body: some View {
+        Section(category.display) {
+            ForEach(items) { item in
+                ExpenseCell(item: item)
+            }
+            .onDelete { indexSet in
+                var itemsToDelete: [ExpenseItem] = []
+                itemsToDelete.reserveCapacity(indexSet.count)
+                for index in indexSet {
+                    itemsToDelete.append(items[index])
+                }
+                onDelete(itemsToDelete)
+            }
+        } // Section
     }
 
 }
