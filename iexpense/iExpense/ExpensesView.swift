@@ -15,12 +15,14 @@ struct ExpensesView: View {
     var body: some View {
         NavigationStack {
             List {
-                ExpenseSection(category: .personal, items: personalExpenses) { items in
-                    removeExpenses(items)
-                }
-                ExpenseSection(category: .business, items: businessExpenses) { items in
-                    removeExpenses(items)
-                }
+                ForEach(ExpenseCategory.allCases, id: \.self) { category in
+                    let items = expenses.items.filter {
+                        $0.category == category
+                    }
+                    ExpenseSection(category: category, items: items) { items in
+                        removeExpenses(items)
+                    }
+                } // ForEach
             } // List
             .overlay {
                 if (expenses.items.isEmpty) {
